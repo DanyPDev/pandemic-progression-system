@@ -19,7 +19,7 @@
   <body>
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container-fluid">
-              <a class="navbar-brand" href="#">COVID SYSTEM</a>
+              <a class="navbar-brand" href="index.php">COVID SYSTEM</a>
               <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
               </button>
@@ -38,13 +38,13 @@
                       Menu
                     </a>
                     <ul id="dropdownChild" class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
-                      <li><a class="dropdown-item" href="covidStats.php">Covid Statistics</a></li>
+                      <li><a class="dropdown-item" href="covidReports.php">Covid Statistics</a></li>
                       <li><a class="dropdown-item" href="#">Another action</a></li>
                     </ul>
                   </li>  
-                
+                  <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">
                   <button type="button nav-item" class="btn btn-outline-danger px-5">Report A Bug</button>
-                  
+                  </a>
                 </ul>
                 
               </div>

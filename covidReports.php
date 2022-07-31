@@ -1,3 +1,23 @@
+<?php require_once 'database.php';
+
+$sql = 'SELECT r.reportDate, c.population, r.countryName, r.numVaccine, r.infectedNotVax + r.infectedVax as infected, r.deathVax
+from Reports r, Country c
+where c.countryName = r.countryName
+order by r.reportDate desc;
+';
+
+$result = mysqli_query($conn, $sql);
+
+$researchers = mysqli_fetch_all($result, MYSQLI_ASSOC);
+
+mysqli_free_result($result);
+
+mysqli_close($conn);
+
+// print_r($researchers);
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -19,7 +39,7 @@
   <body>
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container-fluid">
-              <a class="navbar-brand" href="#">COVID SYSTEM</a>
+              <a class="navbar-brand" href="index.php">COVID SYSTEM</a>
               <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
               </button>
@@ -38,12 +58,13 @@
                       Menu
                     </a>
                     <ul id="dropdownChild" class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
-                      <li><a class="dropdown-item" href="covidStats.php">Covid Statistics</a></li>
+                      <li><a class="dropdown-item" href="covidReports.php">Covid Statistics</a></li>
                       <li><a class="dropdown-item" href="#">Another action</a></li>
                     </ul>
                   </li>  
-                
+                  <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">
                   <button type="button nav-item" class="btn btn-outline-danger px-5">Report A Bug</button>
+                  </a>
                   
                 </ul>
                 
@@ -60,36 +81,31 @@
             element.addEventListener("mouseleave", handleMouseLeave);
           </script>
           <div class="col-xs-1 text-center" style="margin-top= 10px;">
-            <h1 class="h1">Covid Summary</h1>
+            <h1 class="h1">Covid Latest Reports</h1>
         </div>
         <table class="table">
   <thead>
     <tr>
-      <th scope="col">#</th>
-      <th scope="col">First</th>
-      <th scope="col">Last</th>
-      <th scope="col">Handle</th>
+      <th scope="col">Report Date</th>
+      <th scope="col">population</th>
+      <th scope="col">Country</th>
+      <th scope="col">Vaccine Number</th>
+      <th scope="col">Infected</th>
+      <th scope="col">Vaccinated deaths</th>
     </tr>
   </thead>
   <tbody>
-    <tr>
-      <th scope="row">1</th>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>@mdo</td>
-    </tr>
-    <tr>
-      <th scope="row">2</th>
-      <td>Jacob</td>
-      <td>Thornton</td>
-      <td>@fat</td>
-    </tr>
-    <tr>
-      <th scope="row">3</th>
-      <td>Larry</td>
-      <td>the Bird</td>
-      <td>@twitter</td>
-    </tr>
+    <?php foreach($researchers as $r) { ?>
+        <tr>
+            <th scope="row"> <?php echo htmlspecialchars($r['reportDate']); ?> </th>
+            <td> <?php echo htmlspecialchars($r['population']); ?> </td>
+            <td> <?php echo htmlspecialchars($r['countryName']); ?> </td>
+            <td> <?php echo htmlspecialchars($r['numVaccine']); ?> </td>
+            <td> <?php echo htmlspecialchars($r['infected']); ?> </td> 
+            <td> <?php echo htmlspecialchars($r['deathVax']); ?> </td>
+        </tr>
+    <?php } ?>
+    
   </tbody>
 </table>
   </body>
