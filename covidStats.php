@@ -60,13 +60,38 @@
             element.addEventListener("mouseleave", handleMouseLeave);
           </script>
           <div class="col-xs-1 text-center" style="margin-top= 10px;">
-            <h1 class="h1">Welcome to The International Covid Application</h1>
-            <h2 class="h2">Find The Latest Satistics about COVID</h2>
-            <br/>
-            <h2 class="h2">Just use the navigation bar to navigate.</h2>
-            <br/>
-            <h2 class="h2">Have fun using the website! :D</h2>
+            <h1 class="h1">Covid Summary</h1>
         </div>
+        <table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">First</th>
+      <th scope="col">Last</th>
+      <th scope="col">Handle</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">1</th>
+      <td>Mark</td>
+      <td>Otto</td>
+      <td>@mdo</td>
+    </tr>
+    <tr>
+      <th scope="row">2</th>
+      <td>Jacob</td>
+      <td>Thornton</td>
+      <td>@fat</td>
+    </tr>
+    <tr>
+      <th scope="row">3</th>
+      <td>Larry</td>
+      <td>the Bird</td>
+      <td>@twitter</td>
+    </tr>
+  </tbody>
+</table>
   </body>
 
 </html>
