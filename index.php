@@ -17,7 +17,9 @@
 </head>
 
   <body>
+
   <?php include './componants/nav.php'; ?>
+
           <div class="col-xs-1 text-center" style="margin-top= 10px;">
             <h1 class="h1">Welcome to The International Covid Application</h1>
             <h2 class="h2">Find The Latest Satistics about COVID</h2>
