@@ -1,9 +1,8 @@
 <?php require_once 'database.php';
 
-$sql = 'SELECT r.reportDate, c.population, r.countryName, r.numVaccine, r.infectedNotVax + r.infectedVax as infected, r.deathVax
-from Reports r, Country c
-where c.countryName = r.countryName
-order by r.reportDate desc;
+$sql = 'SELECT *
+from User
+order by userID desc;
 ';
 
 $result = mysqli_query($conn, $sql);
@@ -82,28 +81,34 @@ mysqli_close($conn);
             element.addEventListener("mouseleave", handleMouseLeave);
           </script>
           <div class="col-xs-1 text-center" style="margin-top= 10px;">
-            <h1 class="h1">Covid Latest Reports</h1>
+            <h1 class="h1">Users</h1>
         </div>
         <table class="table">
   <thead>
     <tr>
-      <th scope="col">Report Date</th>
-      <th scope="col">population</th>
-      <th scope="col">Country</th>
-      <th scope="col">Vaccine Number</th>
-      <th scope="col">Infected</th>
-      <th scope="col">Vaccinated deaths</th>
+      <th scope="col">userID</th>
+      <th scope="col">Privilege</th>
+      <th scope="col">First Name</th>
+      <th scope="col">Last Name</th>
+      <th scope="col">Citizenship</th>
+      <th scope="col">Phone</th>
+      <th scope="col">Email</th>
+      <th scope="col">Date of Birth</th>
     </tr>
   </thead>
   <tbody>
     <?php foreach($researchers as $r) { ?>
         <tr>
-            <th scope="row"> <?php echo htmlspecialchars($r['reportDate']); ?> </th>
-            <td> <?php echo htmlspecialchars($r['population']); ?> </td>
-            <td> <?php echo htmlspecialchars($r['countryName']); ?> </td>
-            <td> <?php echo htmlspecialchars($r['numVaccine']); ?> </td>
-            <td> <?php echo htmlspecialchars($r['infected']); ?> </td> 
-            <td> <?php echo htmlspecialchars($r['deathVax']); ?> </td>
+            <th scope="row"> <?php echo htmlspecialchars($r['userID']); ?> </th>
+            <td> <?php echo htmlspecialchars($r['privilegeName']); ?> </td>
+            <td> <?php echo htmlspecialchars($r['firstName']); ?> </td>
+            <td> <?php echo htmlspecialchars($r['lastName']); ?> </td>
+            <td> <?php echo htmlspecialchars($r['citizenship']); ?> </td> 
+            <td> <?php echo htmlspecialchars($r['phoneNumber']); ?> </td>
+            <td> <?php echo htmlspecialchars($r['email']); ?> </td>
+            <td> <?php echo htmlspecialchars($r['dob']); ?> </td>
+            <td> <?php echo htmlspecialchars('edit'); ?> </td>
+            <td> <?php echo htmlspecialchars('delete'); ?> </td>
         </tr>
     <?php } ?>
     

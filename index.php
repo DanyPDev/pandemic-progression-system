@@ -39,7 +39,7 @@
                     </a>
                     <ul id="dropdownChild" class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
                       <li><a class="dropdown-item" href="covidReports.php">Covid Statistics</a></li>
-                      <li><a class="dropdown-item" href="#">Another action</a></li>
+                      <li><a class="dropdown-item" href="user.php">Create User</a></li>
                     </ul>
                   </li>  
                   <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">

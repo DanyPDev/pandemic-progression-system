@@ -1,21 +1,23 @@
 <?php require_once 'database.php';
 
-$sql = 'SELECT r.reportDate, c.population, r.countryName, r.numVaccine, r.infectedNotVax + r.infectedVax as infected, r.deathVax
-from Reports r, Country c
-where c.countryName = r.countryName
-order by r.reportDate desc;
-';
+    if(isset($_POST['submit'])){
+        $fName = $_POST['firstName'];
+        $lName = $_POST['lastName'];
+        $citizenship = $_POST['citizenship'];
+        $dob = $_POST['dob'];
+        $phone = $_POST['phoneNumber'];
+        $email = $_POST['email'];
+        $privilege = $_POST['privilegeName'];
 
-$result = mysqli_query($conn, $sql);
+        $sql = "INSERT INTO cuc353_1.User (privilegeName, firstName, lastName, citizenship, email, phoneNumber, dob) VALUES ('$privilege', '$fName', '$lName', '$citizenship', '$email', '$phone', '$dob')";
 
-$researchers = mysqli_fetch_all($result, MYSQLI_ASSOC);
+        if(mysqli_query($conn, $sql))
+        {
+            echo "Form submitted.";
+        }
 
-mysqli_free_result($result);
-
-mysqli_close($conn);
-
-// print_r($researchers);
-
+        mysqli_close($conn);
+    }
 ?>
 
 <!DOCTYPE html>
@@ -23,7 +25,6 @@ mysqli_close($conn);
   <head>
     <meta charset="UTF-8">
     <title>COMP353 Project</title>
-    <link rel="stylesheet" href="index.css">
    <!-- CSS only -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
 
@@ -71,7 +72,7 @@ mysqli_close($conn);
                 
               </div>
             </div>
-          </nav>
+            </nav>
           <script type="text/javascript">
             const element = document.getElementById("dropdown");
             const child = document.getElementById("dropdownChild");
@@ -82,33 +83,18 @@ mysqli_close($conn);
             element.addEventListener("mouseleave", handleMouseLeave);
           </script>
           <div class="col-xs-1 text-center" style="margin-top= 10px;">
-            <h1 class="h1">Covid Latest Reports</h1>
-        </div>
-        <table class="table">
-  <thead>
-    <tr>
-      <th scope="col">Report Date</th>
-      <th scope="col">population</th>
-      <th scope="col">Country</th>
-      <th scope="col">Vaccine Number</th>
-      <th scope="col">Infected</th>
-      <th scope="col">Vaccinated deaths</th>
-    </tr>
-  </thead>
-  <tbody>
-    <?php foreach($researchers as $r) { ?>
-        <tr>
-            <th scope="row"> <?php echo htmlspecialchars($r['reportDate']); ?> </th>
-            <td> <?php echo htmlspecialchars($r['population']); ?> </td>
-            <td> <?php echo htmlspecialchars($r['countryName']); ?> </td>
-            <td> <?php echo htmlspecialchars($r['numVaccine']); ?> </td>
-            <td> <?php echo htmlspecialchars($r['infected']); ?> </td> 
-            <td> <?php echo htmlspecialchars($r['deathVax']); ?> </td>
-        </tr>
-    <?php } ?>
-    
-  </tbody>
-</table>
+            <h1 class="h1">Add a User</h1>
+            </div>
+            <form action="createUser.php" method="post">
+                <br><input type="text" name="firstName" placeholder="First Name"/></br>
+                <br><input type="text" name="lastName" placeholder="Last Name"/></br>
+                <br><input type="text" name="citizenship" placeholder="Citizenship"/></br>
+                <br><input type="text" name="email" placeholder="Email"/></br>
+                <br><input type="text" name="phoneNumber" placeholder="Phone"/></br>
+                <br><input type="text" name="privilegeName" placeholder="Privilege"/></br>
+                <br><input type="text" name="dob" placeholder="Date of Birth"/></br>
+                <br><button type="submit" name="submit">Submit User</button></br>
+            </form>
   </body>
 
 </html>
