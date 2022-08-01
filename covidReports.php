@@ -1,4 +1,4 @@
-<?php require_once 'database.php';
+<?php require_once './components/database.inc.php';
 
 $sql = 'SELECT r.reportDate, c.population, r.countryName, r.numVaccine, r.infectedNotVax + r.infectedVax as infected, r.deathVax
 from Reports r, Country c
@@ -37,7 +37,7 @@ mysqli_close($conn);
 </head>
 
   <body>
-        <?php include './componants/nav.php'; ?>
+        <?php include './components/nav.php'; ?>
           <div class="col-xs-1 text-center" style="margin-top= 10px;">
             <h1 class="h1">Covid Latest Reports</h1>
         </div>
