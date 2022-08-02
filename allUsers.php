@@ -10,6 +10,7 @@ if(isset($_POST['delete'])){
 
   if(mysqli_query($conn, $sql)){
     header('location: allUsers.php?userDelete=true');
+    echo '<script>alert("User Deleted from Database")</script>'; //https://www.geeksforgeeks.org/how-to-pop-an-alert-message-box-using-php/
   } else {
     echo 'query error: ' . mysqli_error($conn);
   }

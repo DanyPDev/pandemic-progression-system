@@ -1,4 +1,6 @@
 <?php require_once './components/database.inc.php';
+session_start();
+
 $input = "";
 if(isset($_POST['View'])){ //check if form was submitted
     $input = $_POST['queries']; //get input text

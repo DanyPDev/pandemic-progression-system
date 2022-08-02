@@ -16,6 +16,7 @@
         mysqli_stmt_execute($stmt);
         mysqli_stmt_close($stmt);
         header("location: index.php?error=none");
+        
         exit();
         // $resultData = mysqli_stmt_get_result($stmt);
 
