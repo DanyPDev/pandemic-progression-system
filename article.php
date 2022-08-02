@@ -1,4 +1,7 @@
-<?php require_once './components/database.php';
+<?php require_once './components/database.inc.php';
+      require_once './components/functions.inc.php';
+      require_once './components/nav.php';
+      session_start();
 
     if(isset($_POST['submit'])){
 
@@ -49,7 +52,7 @@
     <?php include './componants/nav.php'; ?>
         
           <div class="col-xs-1 text-center" style="margin-top= 10px;">
-            <h1 class="h1">Add a User</h1>
+            <h1 class="h1">Add an Article</h1>
             </div>
             <form class="form-group" action="article.php" method="post">
                 <label for="author">Author</label>
@@ -67,7 +70,7 @@
                 <label for="article">Article</label>
                 <br><textarea id="article" type="text" class="form-control" name="article" placeholder="Article"></textarea></br>
 
-                <br><button type="submit" class="btn btn-primary" name="submit">Submit User</button></br>
+                <br><button type="submit" class="btn btn-primary" name="submit">Submit Article</button></br>
             </form>
   </body>
 

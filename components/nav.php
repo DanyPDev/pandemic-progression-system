@@ -76,6 +76,8 @@
               <li><a class="dropdown-item" href="createUser.php">Create User</a></li>
               <li><a class="dropdown-item" href="allUsers.php">Display Users</a></li>
               <li><a class="dropdown-item" href="queries.php">Query</a></li>
+              <li><a class="dropdown-item" href="article.php">Create an Article</a></li>
+              <li><a class="dropdown-item" href="allArticles.php">Display Articles</a></li>
             </ul>
           </li>  
           <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">
