@@ -9,7 +9,7 @@
         $email = $_POST['email'];
         $privilege = $_POST['privilegeName'];
         $password = $_POST['password'];
-        $sql = "INSERT INTO cuc353_1.User (privilegeName, firstName, lastName, citizenship, email, phoneNumber, dob) VALUES ('$privilege', '$fName', '$lName', '$citizenship', '$email', '$phone', '$dob', '$password')";
+        $sql = "INSERT INTO cuc353_1.User(privilegeName, firstName, lastName, citizenship, email, phoneNumber, dob, password) VALUES ('$privilege', '$fName', '$lName', '$citizenship', '$email', '$phone', '$dob', '$password')";
 
         if(mysqli_query($conn, $sql))
         {
