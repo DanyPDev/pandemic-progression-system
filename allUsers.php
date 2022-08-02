@@ -65,7 +65,16 @@ mysqli_close($conn);
             <td> <?php echo htmlspecialchars($r['phoneNumber']); ?> </td>
             <td> <?php echo htmlspecialchars($r['email']); ?> </td>
             <td> <?php echo htmlspecialchars($r['dob']); ?> </td>
-            <td> <button type="button" class="btn btn-lg btn-danger">Delete</button> </td>
+           <?php
+           if(isset($_SESSION['privilegeName']) && $_SESSION['privilegeName'] == "Administrator"){
+            echo '<td> <button type="button" class="btn btn-lg btn-danger">Delete</button> </td>';
+        }
+        else
+        {
+          echo  '<td> <button type="button" class="btn btn-lg btn-danger" disabled>Delete</button> </td>';
+        }
+
+            ?>
         </tr>
     <?php } ?>
     
