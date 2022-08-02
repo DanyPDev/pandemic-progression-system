@@ -1,5 +1,5 @@
 <?php require_once './components/database.php';
-
+session_start();
     if(isset($_POST['submit'])){
 
       if(!empty($_POST['author']) && !empty($_POST['majorTopic']) && !empty($_POST['minorTopic']) && !empty($_POST['summary']) && !empty($_POST['article']))
