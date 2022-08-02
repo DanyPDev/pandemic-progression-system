@@ -1,5 +1,5 @@
 <?php require_once './components/database.inc.php';
-
+session_start();
 $sql = 'SELECT r.reportDate, c.population, r.countryName, r.numVaccine, r.infectedNotVax + r.infectedVax as infected, r.deathVax
 from Reports r, Country c
 where c.countryName = r.countryName

@@ -1,3 +1,18 @@
+<?php require_once './components/functions.inc.php';
+      require_once './components/database.inc.php';
+      session_start();
+      echo isset($_POST["submit"]);
+      if(isset($_POST["submit"])){
+        $username = $_POST["username"];
+        $pwd = $_POST["password"];
+    
+        loginUser($conn, $username, $pwd);
+      }
+      
+      if(isset($_GET["error"]))
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -28,6 +43,7 @@
             <br/>
             <h2 class="h2">Have fun using the website! :D</h2>
         </div>
+      
   </body>
 
 </html>

@@ -1,26 +1,32 @@
 <?php require_once './components/database.inc.php';
       require_once './components/functions.inc.php';
+      session_start();
 
-    if(isset($_POST['submit'])){
-        $fName = $_POST['firstName'];
-        $lName = $_POST['lastName'];
-        $citizenship = $_POST['citizenship'];
-        $dob = $_POST['dob'];
-        $phone = $_POST['phoneNumber'];
-        $email = $_POST['email'];
-        $privilege = $_POST['privilegeName'];
-        $password = $_POST['password'];
-        $sql = "INSERT INTO cuc353_1.User(privilegeName, firstName, lastName, citizenship, email, phoneNumber, dob, password) VALUES ('$privilege', '$fName', '$lName', '$citizenship', '$email', '$phone', '$dob', '$password')";
-
-
-        if(mysqli_query($conn, $sql))
-        {
-            echo "Form submitted.";
-        }
+    if(isset($_POST["submit"])){
+      
+        $fName = $_POST["firstName"];
+        $lName = $_POST["lastName"];
+        $citizenship = $_POST["citizenship"];
+        $dob = $_POST["dob"];
+        $phone = $_POST["phoneNumber"];
+        $email = $_POST["email"];
+        $privilege = $_POST["privilegeName"];
+        $password = $_POST["password"];
+        
+        
 
 
+        createUser($conn,$fName, $lName,$citizenship,$email,$dob,$phone,$privilege,$password);
 
-        mysqli_close($conn);
+        echo $fName;
+        // $stmt = mysqli_stmt_init($conn);
+        // if(!mysqli_stmt_prepare($stmt, $sql)) {
+        //    header("location: index.php");
+        // } 
+        // mysqli_stmt_bind_param($stmt, "ss",$s,$s);
+        // mysqli_stmt_execute($stmt);
+        // $resultDsata = mysqli_stmt_get_result($stmt);
+
     } 
 ?>
 
@@ -54,12 +60,12 @@
                 <input class="m-3" type="text" name="firstName" placeholder="First Name" required>
                 <input class="m-3" type="text" name="lastName" placeholder="Last Name" required>
                 <input class="m-3" type="password" name="password" placeholder="Password" required>
-                <input class="m-3" type="text" name="citizenship" placeholder="Citizenship" required>
+                <input class="m-3" type="text" name="citizenship" placeholder="Citizenship (Needs to be a country from db... no time)" required>
                 <input class="m-3" type="text" name="email" placeholder="Email" required>
                 <input class="m-3" type="text" name="phoneNumber" placeholder="Phone" required>
                 <input class="m-3" type="text" name="privilegeName" placeholder="Privilege" required>
-                <input class="m-3" type="text" name="dob" placeholder="Date of Birth">
-                <button class="btn btn-outline-success px-5" type="submit">Sign Up</button>
+                <input class="m-3" type="date" name="dob" placeholder="Date of Birth">
+                <input class="btn btn-outline-success px-5" value="Sign Up" name="submit" type="submit">
             </form>
         </div>
   </body>

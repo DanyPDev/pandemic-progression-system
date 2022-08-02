@@ -1,5 +1,5 @@
 <?php require_once './components/database.inc.php';
-
+session_start();
 $sql = 'SELECT *
 from User
 order by userID desc;
