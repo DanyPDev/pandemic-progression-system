@@ -37,7 +37,7 @@ mysqli_close($conn);
 
   <body>
           <?php include './components/nav.php'; ?>
-        \
+        
           <div class="col-xs-1 text-center" style="margin-top= 10px;">
             <h1 class="h1">Users</h1>
         </div>
