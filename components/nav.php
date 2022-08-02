@@ -10,7 +10,7 @@
       <div class="collapse navbar-collapse" id="navbarScroll">
         <div class="d-flex">
       
-          <button type="button" class="btn btn-outline-primary mr-2">Signed as' . $_SESSION["username"] . ' with ' . $_SESSION["privilegeName"] . ' priviledges <div class="spinner-grow spinner-grow-sm text-success" role="status">
+          <button type="button" class="btn btn-outline-primary mr-2">Signed as ' . $_SESSION["username"] . ' with ' . $_SESSION["privilegeName"] . ' priviledges <div class="spinner-grow spinner-grow-sm text-success" role="status">
           <span class="sr-only"></span>
         </div></button>
            <a href="./components/logout.inc.php"> <input class="btn btn-outline-danger" value="Logout" type="submit" name="submitLogout"> </a>
