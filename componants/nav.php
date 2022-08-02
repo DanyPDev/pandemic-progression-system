@@ -23,6 +23,7 @@
                       <li><a class="dropdown-item" href="covidReports.php">Covid Statistics</a></li>
                       <li><a class="dropdown-item" href="createUser.php">Create User</a></li>
                       <li><a class="dropdown-item" href="allUsers.php">Display Users</a></li>
+                      <li><a class="dropdown-item" href="article.php">Create Article</a></li>
                     </ul>
                   </li>  
                   <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">

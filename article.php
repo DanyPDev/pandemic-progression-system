@@ -1,6 +1,9 @@
 <?php require_once 'database.php';
 
     if(isset($_POST['submit'])){
+
+      if(!empty($_POST['author']) && !empty($_POST['majorTopic']) && !empty($_POST['minorTopic']) && !empty($_POST['summary']) && !empty($_POST['article']))
+      {
         $author = $_POST['author'];
         $major = $_POST['majorTopic'];
         $minor = $_POST['minorTopic'];
@@ -8,7 +11,7 @@
         $article = $_POST['article'];
         $date = date("Y-m-d");
         
-        $sql="INSERT INTO Article (userID, author, datePublication, majorTopic, minorTopic, summary, article) VALUES ('13', '$author', '$date', '$major', '$minor', '$summary', '$article')";
+        $sql="INSERT INTO Article (author, datePublication, majorTopic, minorTopic, summary, article) VALUES ('$author', '$date', '$major', '$minor', '$summary', '$article')";
 
         if(mysqli_query($conn, $sql))
         {
@@ -16,6 +19,11 @@
         }
 
         mysqli_close($conn);
+      }
+      else{
+        echo "You must fill all the fields.";
+      }
+        
     }
 
 ?>
