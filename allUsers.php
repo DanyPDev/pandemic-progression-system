@@ -1,5 +1,20 @@
 <?php require_once './components/database.inc.php';
+      require_once './components/functions.inc.php';
 session_start();
+
+if(isset($_POST['delete'])){
+
+  $id_to_delete = mysqli_real_escape_string($conn, $_POST['userID']);
+  
+  $sql = "DELETE FROM User WHERE userID = $id_to_delete;";
+
+  if(mysqli_query($conn, $sql)){
+    header('location: allUsers.php?userDelete=true');
+  } else {
+    echo 'query error: ' . mysqli_error($conn);
+  }
+}
+
 $sql = 'SELECT *
 from User
 order by userID desc;
@@ -67,7 +82,10 @@ mysqli_close($conn);
             <td> <?php echo htmlspecialchars($r['dob']); ?> </td>
            <?php
            if(isset($_SESSION['privilegeName']) && $_SESSION['privilegeName'] == "Administrator"){
-            echo '<td> <button type="button" class="btn btn-lg btn-danger">Delete</button> </td>';
+            echo '<td> <form action="allUsers.php" method="POST">
+            <input type="hidden" name="userID" value="'.$r["userID"].'">
+            <input type="submit" class="btn btn-lg btn-danger" value="Delete" name="delete">
+        </form> </td>';
         }
         else
         {

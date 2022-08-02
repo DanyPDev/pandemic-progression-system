@@ -1,4 +1,4 @@
-<?php require_once 'database.php';
+<?php require_once './components/database.inc.php';
 $input = "";
 if(isset($_POST['View'])){ //check if form was submitted
     $input = $_POST['queries']; //get input text
@@ -24,7 +24,7 @@ if(isset($_POST['View'])){ //check if form was submitted
     </style>
 </head>
   <body>
-        <?php include './componants/nav.php'; ?>
+        <?php include './components/nav.php'; ?>
         <div class="col-xs-1 text-center" style="margin-top= 10px;">
             <h1 class="h1">Queries 10 to 20</h1>
         </div>
@@ -113,7 +113,7 @@ Order by citizenship ASC, ra.author ASC, ra.date ASC;";
                     break;
                 case 13:
                     $sql = "Select u.privilegeName, u.userName, u.firstName, u.lastName, u.citizenship, u.email, u.phone, sus.suspensionDate
-                            From User u, suspensedUsers sus
+                            From User u, suspensedUser sus
                             Where u.userName = sus.userName
                             Order by sus.suspensionDate ASC;";
                     $result = $conn->query($sql);

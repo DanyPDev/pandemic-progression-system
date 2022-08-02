@@ -52,6 +52,34 @@
         mysqli_stmt_close($stmt);
     }
 
+    
+    function deleteUser($conn, $userID){
+        $sql = 'DELETE FROM User WHERE userID = ?;';
+        $stmt = mysqli_stmt_init($conn);
+
+        if(!mysqli_stmt_prepare($stmt, $sql)) {
+           header("location: index.php?error=stmtinvalid");
+           exit();
+        } 
+
+        mysqli_stmt_bind_param($stmt, "s", $userID);
+        mysqli_stmt_execute($stmt);
+
+        $resultData = mysqli_stmt_get_result($stmt);
+
+        if($row = mysqli_fetch_assoc($resultData)) {
+            header("location: allUsers.php?error=none");
+            return $row;
+        } else {
+            header("location: allUsers.php?error=cannotdelete");
+            $result = false;
+            return $result;
+        }
+
+        mysqli_stmt_close($stmt);
+        
+    }
+
     function loginUser($conn, $username, $pwd){
         $uIDExists = checkUid($conn, $username);
         

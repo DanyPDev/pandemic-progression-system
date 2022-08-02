@@ -10,7 +10,9 @@
       <div class="collapse navbar-collapse" id="navbarScroll">
         <div class="d-flex">
       
-          <button type="button" class="btn btn-outline-primary mr-2">Signed as' . $_SESSION["username"] . ' with ' . $_SESSION["privilegeName"] . ' priviledges</button>
+          <button type="button" class="btn btn-outline-primary mr-2">Signed as' . $_SESSION["username"] . ' with ' . $_SESSION["privilegeName"] . ' priviledges <div class="spinner-grow spinner-grow-sm text-success" role="status">
+          <span class="sr-only"></span>
+        </div></button>
            <a href="./components/logout.inc.php"> <input class="btn btn-outline-danger" value="Logout" type="submit" name="submitLogout"> </a>
          
         </div>
@@ -24,6 +26,7 @@
               <li><a class="dropdown-item" href="covidReports.php">Covid Statistics</a></li>
               <li><a class="dropdown-item" href="createUser.php">Create User</a></li>
               <li><a class="dropdown-item" href="allUsers.php">Display Users</a></li>
+              <li><a class="dropdown-item" href="queries.php">Query</a></li>
             </ul>
           </li>  
           <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">
@@ -72,6 +75,7 @@
               <li><a class="dropdown-item" href="covidReports.php">Covid Statistics</a></li>
               <li><a class="dropdown-item" href="createUser.php">Create User</a></li>
               <li><a class="dropdown-item" href="allUsers.php">Display Users</a></li>
+              <li><a class="dropdown-item" href="queries.php">Query</a></li>
             </ul>
           </li>  
           <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">

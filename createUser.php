@@ -18,7 +18,7 @@
 
         createUser($conn,$fName, $lName,$citizenship,$email,$dob,$phone,$privilege,$password);
 
-        echo $fName;
+    
         // $stmt = mysqli_stmt_init($conn);
         // if(!mysqli_stmt_prepare($stmt, $sql)) {
         //    header("location: index.php");
