@@ -1,3 +1,4 @@
+<?php require_once('login.inc.php') ?>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container-fluid">
@@ -8,8 +9,8 @@
               <div class="collapse navbar-collapse" id="navbarScroll">
                 <div>
                   <form class="d-flex">
-                    <input class="form-control me-2" type="username" name="username" placeholder="Username" aria-label="Search">
-                    <input class="form-control me-2" type="password" name="password" placeholder="Password" aria-label="Search">
+                    <input class="form-control me-2" type="username" name="username" placeholder="Username" aria-label="Search" required>
+                    <input class="form-control me-2" type="password" name="password" placeholder="Password" aria-label="Search" required>
                     <button class="btn btn-outline-success" type="submit">Login</button>
                   </form>
                 </div>
@@ -21,7 +22,8 @@
                     </a>
                     <ul id="dropdownChild" class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
                       <li><a class="dropdown-item" href="covidReports.php">Covid Statistics</a></li>
-                      <li><a class="dropdown-item" href="#">Another action</a></li>
+                      <li><a class="dropdown-item" href="createUser.php">Create User</a></li>
+                      <li><a class="dropdown-item" href="allUsers.php">Display Users</a></li>
                     </ul>
                   </li>  
                   <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">
