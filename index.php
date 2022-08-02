@@ -1,7 +1,7 @@
-<?php require './components/functions.inc.php';
+<?php require_once './components/functions.inc.php';
       require_once './components/database.inc.php';
    
-      echo isset($_POST["submit"]);
+    
       if(isset($_POST["submit"])){
         $username = $_POST["username"];
         $pwd = $_POST["password"];
