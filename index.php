@@ -1,4 +1,4 @@
-<?php require_once './components/functions.inc.php';
+<?php require './components/functions.inc.php';
       require_once './components/database.inc.php';
       session_start();
       echo isset($_POST["submit"]);
