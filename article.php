@@ -46,7 +46,7 @@ session_start();
 </head>
 
   <body>
-    <?php include './componants/nav.php'; ?>
+    <?php include './components/nav.php'; ?>
         
           <div class="col-xs-1 text-center" style="margin-top= 10px;">
             <h1 class="h1">Add a User</h1>
