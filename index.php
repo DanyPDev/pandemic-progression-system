@@ -1,6 +1,6 @@
 <?php require './components/functions.inc.php';
       require_once './components/database.inc.php';
-      session_start();
+   
       echo isset($_POST["submit"]);
       if(isset($_POST["submit"])){
         $username = $_POST["username"];
