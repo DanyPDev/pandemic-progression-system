@@ -57,6 +57,7 @@
         
         if($uIDExists === false) {
             header("location: index.php?error=wronglogin");
+            exit();
         }
 
         $pwdHashed = $uIDExists["password"];
@@ -75,5 +76,5 @@
                 exit();
         }
     }
-
+?>
 
