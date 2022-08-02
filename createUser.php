@@ -13,7 +13,7 @@
 
         if(mysqli_query($conn, $sql))
         {
-            echo "Form submitted.";
+          echo '<script>alert("User Added to Database")</script>'; //https://www.geeksforgeeks.org/how-to-pop-an-alert-message-box-using-php/
         }
 
         mysqli_close($conn);
@@ -38,62 +38,34 @@
 </head>
 
   <body>
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <div class="container-fluid">
-              <a class="navbar-brand" href="index.php">COVID SYSTEM</a>
-              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-              </button>
-              <div class="collapse navbar-collapse" id="navbarScroll">
-                <div>
-                  <form class="d-flex">
-                    <input class="form-control me-2" type="username" name="username" placeholder="Username" aria-label="Search">
-                    <input class="form-control me-2" type="password" name="password" placeholder="Password" aria-label="Search">
-                    <button class="btn btn-outline-success" type="submit">Login</button>
-                  </form>
-                </div>
-                <div class="collapse navbar-collapse d-flex flex-row-reverse" id="navbarScroll" style="gap: 10px;">
-                <ul class="navbar-nav navbar-nav-scroll" style="--bs-scroll-height: 100px;">
-                <li class="nav-item dropdown pr-10">
-                    <a id="dropdown" class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" aria-expanded="false">
-                      Menu
-                    </a>
-                    <ul id="dropdownChild" class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
-                      <li><a class="dropdown-item" href="covidReports.php">Covid Statistics</a></li>
-                      <li><a class="dropdown-item" href="createUser.php">Create User</a></li>
-                      <li><a class="dropdown-item" href="allUsers.php">Display Users</a></li>
-                    </ul>
-                  </li>  
-                  <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">
-                  <button type="button nav-item" class="btn btn-outline-danger px-5">Report A Bug</button>
-                  </a>
-                  
-                </ul>
-                
-              </div>
-            </div>
-            </nav>
-          <script type="text/javascript">
-            const element = document.getElementById("dropdown");
-            const child = document.getElementById("dropdownChild");
-            console.log(element);
-            let handleMouseEnter = () => {element.classList.add("show"); child.click();};
-            let handleMouseLeave = () => {element.classList.remove("show"); child.click();};
-            element.addEventListener("mouseenter", handleMouseEnter);
-            element.addEventListener("mouseleave", handleMouseLeave);
-          </script>
+    <?php include './componants/nav.php'; ?>
+        
           <div class="col-xs-1 text-center" style="margin-top= 10px;">
             <h1 class="h1">Add a User</h1>
             </div>
-            <form action="createUser.php" method="post">
-                <br><input type="text" name="firstName" placeholder="First Name"/></br>
-                <br><input type="text" name="lastName" placeholder="Last Name"/></br>
-                <br><input type="text" name="citizenship" placeholder="Citizenship"/></br>
-                <br><input type="text" name="email" placeholder="Email"/></br>
-                <br><input type="text" name="phoneNumber" placeholder="Phone"/></br>
-                <br><input type="text" name="privilegeName" placeholder="Privilege"/></br>
-                <br><input type="text" name="dob" placeholder="Date of Birth"/></br>
-                <br><button type="submit" name="submit">Submit User</button></br>
+            <form class="form-group" action="createUser.php" method="post">
+                <label for="fname">First Name</label>
+                <br><input id="fname" type="text" class="form-control" name="firstName" placeholder="First Name"/></br>
+
+                <label for="lname">Last Name</label>
+                <br><input id="lname" type="text" class="form-control" name="lastName" placeholder="Last Name"/></br>
+
+                <label for="citizenship">Citizenship</label>
+                <br><input id="citizenship" type="text" class="form-control" name="citizenship" placeholder="Citizenship"/></br>
+
+                <label for="email">Email</label>
+                <br><input id="email" type="text" class="form-control" name="email" placeholder="Email"/></br>
+
+                <label for="phone">Phone Number</label>
+                <br><input id="phone" type="text" class="form-control" name="phoneNumber" placeholder="Phone"/></br>
+
+                <label for="privilege">Privilege</label>
+                <br><input id="privilege" type="text" class="form-control" name="privilegeName" placeholder="Privilege"/></br>
+
+                <label for="dob">Date of Birth</label>
+                <br><input id="dob"type="text" class="form-control" name="dob" type="date" placeholder="Date of Birth"/></br>
+
+                <br><button type="submit" class="btn btn-primary" name="submit">Submit User</button></br>
             </form>
   </body>
 
