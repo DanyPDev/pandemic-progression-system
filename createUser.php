@@ -1,4 +1,5 @@
-<?php require_once 'database.php';
+<?php require_once './components/database.inc.php';
+      require_once './components/functions.inc.php';
 
     if(isset($_POST['submit'])){
         $fName = $_POST['firstName'];
@@ -11,13 +12,16 @@
         $password = $_POST['password'];
         $sql = "INSERT INTO cuc353_1.User(privilegeName, firstName, lastName, citizenship, email, phoneNumber, dob, password) VALUES ('$privilege', '$fName', '$lName', '$citizenship', '$email', '$phone', '$dob', '$password')";
 
+
         if(mysqli_query($conn, $sql))
         {
             echo "Form submitted.";
         }
 
+
+
         mysqli_close($conn);
-    }
+    } 
 ?>
 
 <!DOCTYPE html>
@@ -35,9 +39,6 @@
           .dropdown:hover .dropdown-menu{
             display: block;
           }
-          form > input{
-            margin: 10px !important;
-          }
          
     </style>
     
@@ -46,7 +47,7 @@
   <body>
         <?php include './components/nav.php'; ?>
           
-          <div class="d-flex align-items-center flex-column col-xs-1 text-center" style="margin-top= 10px;">
+          <div class="d-flex align-items-center flex-column col-xs-1 text-center" style="margin-top: 10px;">
             <h1 class="h1">Sign Up</h1>
         
             <form class="d-flex flex-column w-25" action="createUser.php" method="post" width="200px">

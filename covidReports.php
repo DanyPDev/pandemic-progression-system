@@ -40,7 +40,7 @@ mysqli_close($conn);
 
         <?php include './components/nav.php'; ?>
 
-          <div class="col-xs-1 text-center" style="margin-top= 10px;">
+          <div class="col-xs-1 text-center" style="margin-top: 10px;">
             <h1 class="h1">Covid Latest Reports</h1>
         </div>
         <table class="table">

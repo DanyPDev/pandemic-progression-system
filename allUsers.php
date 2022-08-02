@@ -1,4 +1,4 @@
-<?php require_once 'database.php';
+<?php require_once './components/database.inc.php';
 
 $sql = 'SELECT *
 from User
@@ -43,7 +43,7 @@ mysqli_close($conn);
         </div>
         <table class="table">
   <thead>
-    <tr>
+    <tr class="h1" style="font-size: 20px;">
       <th scope="col">userID</th>
       <th scope="col">Privilege</th>
       <th scope="col">First Name</th>
@@ -56,7 +56,7 @@ mysqli_close($conn);
   </thead>
   <tbody>
     <?php foreach($researchers as $r) { ?>
-        <tr>
+        <tr class="h1" style="font-size: 15px;">
             <th scope="row"> <?php echo htmlspecialchars($r['userID']); ?> </th>
             <td> <?php echo htmlspecialchars($r['privilegeName']); ?> </td>
             <td> <?php echo htmlspecialchars($r['firstName']); ?> </td>
@@ -65,8 +65,7 @@ mysqli_close($conn);
             <td> <?php echo htmlspecialchars($r['phoneNumber']); ?> </td>
             <td> <?php echo htmlspecialchars($r['email']); ?> </td>
             <td> <?php echo htmlspecialchars($r['dob']); ?> </td>
-            <td> <?php echo htmlspecialchars('edit'); ?> </td>
-            <td> <?php echo htmlspecialchars('delete'); ?> </td>
+            <td> <button type="button" class="btn btn-lg btn-danger">Delete</button> </td>
         </tr>
     <?php } ?>
     

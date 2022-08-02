@@ -1,12 +1,12 @@
 /* fades h1 and h2 for all links */
 .h1 {
-    animation: fadeInAnimation ease 3s;
+    animation: fadeInAnimation ease 1s;
     animation-iteration-count: 1;
     animation-fill-mode: forwards;
 }
 
 .h2 {
-    animation: fadeInAnimation ease 8s;
+    animation: fadeInAnimation ease 2s;
     animation-iteration-count: 1;
     animation-fill-mode: forwards;
 }
