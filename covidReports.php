@@ -1,9 +1,10 @@
 <?php require_once './components/database.inc.php';
 session_start();
-$sql = 'SELECT r.GA_Country ,r.reportDate, r.numVaccine, r.infectedNotVax + r.infectedVax as infected, r.deathVax
-from Reports r
-order by r.reportDate desc;
-';
+$sql = "select r.reportDate, SUM(p.population) as population, c.countryName, r.numVaccine, r.infectedNotVax + r.infectedVax as infected, r.deathVax
+from Reports r, Country c, ProStaTer p, countryContains cc
+where c.countryName = r.GA_country AND c.countryName = cc.countryName AND p.prostaterName = cc.prostaterName
+Group by r.reportDate
+order by r.reportDate desc;";
 
 $result = mysqli_query($conn, $sql);
 
