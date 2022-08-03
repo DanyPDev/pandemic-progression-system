@@ -17,13 +17,9 @@
         $password2 = $_POST["password"];
 
         $sql="UPDATE cuc353_1.User SET privilegeName='$privilege2', firstName='$fName2', lastName='$lName2', citizenship='$citizenship2', email='$email2', phoneNumber='$phone2', dob='$dob2' WHERE userID='$userID'";
-        $result = mysqli_query($conn, $sql);
-
-        mysqli_close($conn);
         
         if(mysqli_query($conn, $sql))
         {
-      
           header('location: allUsers.php');
         }
         else{
