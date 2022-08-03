@@ -1,7 +1,5 @@
 <?php require_once './components/database.inc.php';
-      require_once './components/functions.inc.php';
       require_once './components/nav.php';
-      session_start();
 
     if(isset($_POST['submit'])){
 
@@ -14,9 +12,20 @@
         $article = $_POST['article'];
         $date = date("Y-m-d");
         
-        $sql="INSERT INTO Article (author, datePublication, majorTopic, minorTopic, summary, article) VALUES ('$author', '$date', '$major', '$minor', '$summary', '$article')";
+        $sql="INSERT INTO cuc353_1.Article (author, datePublication, article) VALUES ('$author', '$date', '$article')";
+        mysqli_query($conn, $sql) or die(mysqli_error($db));
 
-        if(mysqli_query($conn, $sql))
+        $fetch = mysqli_query($conn, "SELECT articleID FROM cuc353_1.Article WHERE datePublication='$date' and article='$article'");
+
+        $result = mysqli_fetch_all($fetch, MYSQLI_ASSOC);
+        foreach($result as $r);
+        $articleID = $r['articleID'];
+        
+
+        $sql2="INSERT INTO cuc353_1.Summary (majorTopic, minorTopic, summary) VALUES ('$major', '$minor', '$summary')";
+        $sql3="INSERT INTO cuc353_1.Topic (articleID, majorTopic, minorTopic) VALUES ('$articleID', '$major', '$minor')";
+
+        if(mysqli_query($conn, $sql2) && mysqli_query($conn, $sql3))
         {
           echo '<script>alert("Article Submitted")</script>'; //https://www.geeksforgeeks.org/how-to-pop-an-alert-message-box-using-php/
         }

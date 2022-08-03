@@ -63,9 +63,6 @@ mysqli_close($conn);
       <th scope="col">articleID</th>
       <th scope="col">Author</th>
       <th scope="col">Date of Publication</th>
-      <th scope="col">Major Topic</th>
-      <th scope="col">Minor Topic</th>
-      <th scope="col">Summary</th>
       <th scope="col">Article</th>
     </tr>
   </thead>
@@ -75,14 +72,11 @@ mysqli_close($conn);
             <th scope="row"> <?php echo htmlspecialchars($r['articleID']); ?> </th>
             <td> <?php echo htmlspecialchars($r['author']); ?> </td>
             <td> <?php echo htmlspecialchars($r['datePublication']); ?> </td>
-            <td> <?php echo htmlspecialchars($r['majorTopic']); ?> </td>
-            <td> <?php echo htmlspecialchars($r['minorTopic']); ?> </td> 
-            <td> <?php echo htmlspecialchars($r['summary']); ?> </td>
             <td> <?php echo htmlspecialchars($r['article']); ?> </td>
            <?php
            if(isset($_SESSION['author']) && $_SESSION['author'] == $r['author']){
             echo '<td> <form action="allArticles.php" method="POST">
-            <input type="hidden" name="author" value="'.$r["author"].'">
+            <input type="hidden" name="author" value="'.$r["articleID"].'">
             <input type="submit" class="btn btn-lg btn-danger" value="Delete" name="delete">
         </form> </td>';
         }
