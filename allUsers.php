@@ -82,7 +82,7 @@ mysqli_close($conn);
             <td> <?php echo htmlspecialchars($r['email']); ?> </td>
             <td> <?php echo htmlspecialchars($r['dob']); ?> </td>
            <?php
-           if(isset($_SESSION['privilegeName']) && $_SESSION['privilegeName'] == "Administrator"){
+           if(isset($_SESSION['privilegeName']) && $_SESSION['privilegeName'] == "Administration"){
             echo '<td> <form action="allUsers.php" method="POST">
             <input type="hidden" name="userID" value="'.$r["userID"].'">
             <input type="submit" class="btn btn-lg btn-danger" value="Delete" name="delete">
