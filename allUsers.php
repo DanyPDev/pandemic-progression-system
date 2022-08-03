@@ -85,15 +85,16 @@ mysqli_close($conn);
            <?php
             if(isset($_SESSION['privilegeName']) && $_SESSION['privilegeName'] == "Administrator"){
               echo '<td> <form action="allUsers.php" method="POST">
-              <input type="hidden" name="userID" href="editUser.php?userID=<?php echo "'.$r["userID"].'"?>"/>
-              <button type="submit" class="btn btn-lg btn-danger" name="edit" value="Edit">Edit</Button></form> </td>';
+              <input type="submit" class="btn btn-lg btn-danger" name="edit" value="Edit"></form> </td>';
               echo '<td> <form action="allUsers.php" method="POST">
               <input type="hidden" name="userID" value="'.$r["userID"].'">
               <input type="submit" class="btn btn-lg btn-danger" value="Delete" name="delete"></form> </td>';
             }
             else
             {
-              echo  '<td> <button type="button" class="btn btn-lg btn-danger" disabled>Edit</button> </td>';
+              echo  '<form action="allUsers.php" method="POST"
+              <input type="hidden" name="userID" value="'.$r["userID"].'">
+              <td><input href="editUser.php" type="button" class="btn btn-lg btn-danger disabled></td>';
               echo  '<td> <button type="button" class="btn btn-lg btn-danger" disabled>Delete</button> </td>';
             }
 
