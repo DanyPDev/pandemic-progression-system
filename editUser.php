@@ -2,14 +2,12 @@
       require_once './components/functions.inc.php';
       session_start();
 
-      $userID = $_GET['userID'];
-      echo $userID;
-        $sql = mysqli_query($conn, "SELECT * FROM User WHERE userID='$userID'"); 
-        $result = mysqli_fetch_all($sql, MYSQLI_ASSOC);
+    
+
        
 
     if(isset($_POST["submit"])){
-      
+
         $fName = $_POST["firstName"];
         $lName = $_POST["lastName"];
         $citizenship = $_POST["citizenship"];
@@ -18,11 +16,18 @@
         $email = $_POST["email"];
         $privilege = $_POST["privilegeName"];
         $password = $_POST["password"];
-        
-        
 
+        $sql="UPDATE cuc353_1.User SET privilegeName='$privilege', firstName='$fName', lastName='$lName', citizenship='$citizenship', email='$email', phonenumber='$phone', dob='$dob') WHERE userID='$userID'";
 
-        createUser($conn,$fName, $lName,$citizenship,$email,$dob,$phone,$privilege,$password);
+        if(mysqli_query($conn, $sql))
+        {
+          echo '<script>alert("Edit Submitted")</script>'; //https://www.geeksforgeeks.org/how-to-pop-an-alert-message-box-using-php/
+          header('location: allUsers.php');
+        }
+
+        mysqli_close($conn);
+        
+      
 
     
         // $stmt = mysqli_stmt_init($conn);
@@ -61,16 +66,22 @@
           
           <div class="d-flex align-items-center flex-column col-xs-1 text-center" style="margin-top: 10px;">
             <h1 class="h1">Edit User</h1>
+            <?php 
+                $userID = $_SESSION['userEdit'];
+                $sql = mysqli_query($conn, "SELECT * FROM User WHERE userID='$userID'"); 
+                $result = mysqli_fetch_all($sql, MYSQLI_ASSOC);
+                foreach($sql as $r) { ?>
                 <form class="d-flex flex-column w-25" action="createUser.php" method="post" width="200px">
-                    <input class="m-3" type="text" name="firstName" value=<?php $result['firstName']?> required>
-                    <input class="m-3" type="text" name="lastName" value=<?php $result['lastName']?> required>
-                    <input class="m-3" type="text" name="citizenship" value=<?php $result['citizenship']?> required>
-                    <input class="m-3" type="text" name="email" value=<?php $result['email']?> required>
-                    <input class="m-3" type="text" name="phoneNumber" value=<?php $result['phoneNumber']?> required>
-                    <input class="m-3" type="text" name="privilegeName" value=<?php $result['privilegeName']?> required>
-                    <input class="m-3" type="date" name="dob" value=<?php $result['dob']?>>
-                    <input class="btn btn-outline-success px-5" value="Sign Up" name="submit" type="submit">
+                    <input class="m-3" type="text" name="firstName" value="<?php $r['firstName']; echo $r['firstName']?>" required>
+                    <input class="m-3" type="text" name="lastName" value="<?php $r['lastName']; echo $r['lastName']?>" required>
+                    <input class="m-3" type="text" name="citizenship" value="<?php $r['citizenship']; echo $r['citizenship']?>" required>
+                    <input class="m-3" type="text" name="email" value="<?php $r['email']; echo $r['email']?>" required>
+                    <input class="m-3" type="text" name="phoneNumber" value="<?php $r['phoneNumber']; echo $r['phoneNumber']?>" required>
+                    <input class="m-3" type="text" name="privilegeName" value="<?php $r['privilegeName']; echo $r['privilegeName']?>" required>
+                    <input class="m-3" type="date" name="dob" value="<?php $r['dob']; echo $r['dob']?>">
+                    <input class="btn btn-outline-success px-5" value="Update" name="submit" type="submit">
             </form>
+            <?php } ?>
 
         </div>
   </body>
