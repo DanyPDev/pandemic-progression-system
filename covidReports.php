@@ -56,7 +56,7 @@ mysqli_close($conn);
   <tbody>
     <?php foreach($researchers as $r) { ?>
         <tr class="h2">
-            <th scope="row"> <?php echo htmlspecialchars($r['GA_Country']); ?> </th>
+            <th scope="row"> <?php echo htmlspecialchars($r['GA_country']); ?> </th>
             <td> <?php echo htmlspecialchars($r['reportDate']); ?> </td>
             <td> <?php echo htmlspecialchars($r['numVaccine']); ?> </td>
             <td> <?php echo htmlspecialchars($r['infected']); ?> </td>
