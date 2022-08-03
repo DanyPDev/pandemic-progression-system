@@ -1,7 +1,7 @@
 <?php require_once './components/database.inc.php';
       require_once './components/functions.inc.php';
 session_start();
-if(isset($_POST['edit'])){ header('location: index.php'); }
+if(isset($_POST['edit'])){ $_SESSION['userEdit'] = $_POST['userID'];header('location: index.php'); }
 if(isset($_POST['delete'])){
 
   $id_to_delete = mysqli_real_escape_string($conn, $_POST['userID']);
@@ -85,15 +85,13 @@ mysqli_close($conn);
            if(isset($_SESSION['privilegeName']) && $_SESSION['privilegeName'] == "Administration"){
             echo '<td> <form action="allUsers.php" method="POST">
             <input type="hidden" name="userID" value="'.$r["userID"].'">
-            <a href="index.php">
-            <input type="submit" class="btn btn-lg btn-danger" value="Edit" name="edit">
-            </a>
+            <input type="submit" class="btn btn-lg btn-primary" value="Edit" name="edit">
             <input type="submit" class="btn btn-lg btn-danger" value="Delete" name="delete">
         </form> </td>';
         }
         else
         {
-          echo '<td> <button type="button" class="btn btn-lg btn-danger" disabled>Edit</button> </td>';
+          echo '<td> <button type="button" class="btn btn-lg btn-primary" disabled>Edit</button> </td>';
           echo  '<td> <button type="button" class="btn btn-lg btn-danger" disabled>Delete</button> </td>';
         }
 

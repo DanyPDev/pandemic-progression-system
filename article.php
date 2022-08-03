@@ -50,7 +50,7 @@ session_start();
     <?php include './components/nav.php'; ?>
         
           <div class="col-xs-1 text-center" style="margin-top= 10px;">
-            <h1 class="h1">Add a User</h1>
+            <h1 class="h1">Add an article</h1>
             </div>
             <form class="form-group" action="article.php" method="post">
                 <label for="author">Author</label>
