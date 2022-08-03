@@ -1,4 +1,6 @@
-<?php require_once 'database.php';
+<?php require_once './components/database.inc.php';
+session_start();
+
 $input = "";
 if(isset($_POST['View'])){ //check if form was submitted
     $input = $_POST['queries']; //get input text
@@ -24,7 +26,7 @@ if(isset($_POST['View'])){ //check if form was submitted
     </style>
 </head>
   <body>
-        <?php include './componants/nav.php'; ?>
+        <?php include './components/nav.php'; ?>
         <div class="col-xs-1 text-center" style="margin-top= 10px;">
             <h1 class="h1">Queries 10 to 20</h1>
         </div>
@@ -116,7 +118,7 @@ if(isset($_POST['View'])){ //check if form was submitted
                         echo '<table class="table"><tr><th scope="col">Role</th><th scope="col">Username</th><th scope="col">Name</th><th scope="col">Citizenship</th><th scope="col">Email</th><th scope="col">Phone</th><th scope="col">Suspension Date</th></tr>';
                         // output data of each row
                         while($row = $result->fetch_assoc()) {
-                            echo "<tr><td>".$row["privilegeName"]. "</td><td>". $row["u.userName"]. "</td><td>" . $row["firstName"]. " " . $row["lastName"]. "</td><td>" . $row["citizenship"]. "</td><td>" . $row["email"]. "</td><td>" . $row["phoneNumber"]. "</td><td> ". $row["date"] ."</td></tr>";
+                            echo "<tr><td>".$row["privilegeName"]. "</td><td>". $row["userName"]. "</td><td>" . $row["firstName"]. " " . $row["lastName"]. "</td><td>" . $row["citizenship"]. "</td><td>" . $row["email"]. "</td><td>" . $row["phoneNumber"]. "</td><td> ". $row["date"] ."</td></tr>";
                         }
                         echo "</table>";
                     } else {
@@ -146,8 +148,8 @@ if(isset($_POST['View'])){ //check if form was submitted
                     break;
                 case 16:
                     $sql = "select r.regionName as regionName, c.countryName, COUNT(distinct a.author) as numOfAuthors, COUNT(distinct a.articleID) as numOfPublications
-                    from Region r, Country c, regionOf ro, user_lookUp ul, Article a, User u, Organization o
-                    where r.regionName = ro.regionName and c.countryName = ro.countryName and ul.userID = u.userID and (ul.countryName = c.countryName XOR o.orgCountry = c.countryName) and a.author = o.organizationName XOR (a.author = (u.firstName + ' ' + u.lastName))
+                    from Region r, Country c, regionOf ro, Article a, User u, Organization o
+                    where r.regionName = ro.regionName and c.countryName = ro.countryName and ((c.countryName = u.citizenship AND concat(u.firstName, ' ', u.lastName) = a.author) XOR (c.countryName = o.orgCountry AND o.organizationName = a.author))
                     group by c.countryName
                     order by r.regionName asc, numOfPublications desc;";
                     $result = $conn->query($sql);
@@ -165,7 +167,7 @@ if(isset($_POST['View'])){ //check if form was submitted
                     $conn->close();
                     break;  
                 case 17:
-                    $sql = "select r.regionName, c.countryName, SUM(p.population), SUM(v.numVaccine), SUM(p.covidDeaths), SUM(v.deathVaccine)
+                    $sql = "select r.regionName, c.countryName, SUM(p.population) as population, SUM(v.numVaccine) as numVaccine, SUM(p.covidDeaths) as covidDeaths, SUM(v.deathVaccine) as deathVaccine
                     from Region r, Country c, ProStaTer p, regionOf ro, countryContains cc, Vaccine v
                     where r.regionName = ro.regionName AND c.countryName = ro.countryName AND c.countryName = cc.countryName AND cc.prostaterName = p.prostaterName AND p.prostaterName = v.prostaterName
                     group by c.countryName
