@@ -65,7 +65,7 @@
                 echo $userID;
                 $sql = mysqli_query($conn, "SELECT * FROM User WHERE userID='$userID'"); 
                 $result = mysqli_fetch_all($sql, MYSQLI_ASSOC);
-                cmysqli_free_result($sql);
+                mysqli_free_result($sql);
                 mysqli_close($conn);
         
                 foreach($result as $r) { ?>
