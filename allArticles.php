@@ -2,15 +2,18 @@
       require_once './components/functions.inc.php';
 session_start();
 
+if(isset($_POST['edit'])){ $_SESSION['articleIDEdit'] = $_POST['articleID']; header('location: editArticle.php'); }
+
 if(isset($_POST['delete'])){
 
-  $id_to_delete = mysqli_real_escape_string($conn, $_POST['articleID']);
+  $id_article = mysqli_real_escape_string($conn, $_POST['articleID']);
+  echo $id_article;
   
-  $sql = "DELETE FROM Article WHERE articleID = $id_to_delete;";
+  $sql = "DELETE FROM Article WHERE articleID = '$id_article';";
 
   if(mysqli_query($conn, $sql)){
-    header('location: allUsers.php?userDelete=true');
-    echo '<script>alert("User Deleted from Database")</script>'; //https://www.geeksforgeeks.org/how-to-pop-an-alert-message-box-using-php/
+    header('location: allArticles.php?articleDelete=true');
+    echo '<script>alert("Article Deleted from Database")</script>'; //https://www.geeksforgeeks.org/how-to-pop-an-alert-message-box-using-php/
   } else {
     echo 'query error: ' . mysqli_error($conn);
   }
@@ -27,9 +30,10 @@ $researchers = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
 mysqli_free_result($result);
 
-mysqli_close($conn);
+
 
 // print_r($researchers);
+
 
 ?>
 
@@ -74,18 +78,28 @@ mysqli_close($conn);
             <td> <?php echo htmlspecialchars($r['datePublication']); ?> </td>
             <td> <?php echo htmlspecialchars($r['article']); ?> </td>
            <?php
-           if(isset($_SESSION['author']) && $_SESSION['author'] == $r['author']){
-            echo '<td> <form action="allUsers.php" method="POST">
-            <input type="hidden" name="userID" value="'.$r["articleID"].'">
-            <input type="submit" class="btn btn-lg btn-danger" value="Edit" name="edit"></form> </td>';
-
+           $userID = $_SESSION['userID'];
+           $sql2 = "SELECT firstName, lastName, privilegeName FROM User WHERE userID='$userID'";
+           $fetch = mysqli_query($conn, $sql2);
+           $result2 = mysqli_fetch_all($fetch, MYSQLI_ASSOC);
+           foreach($result2 as $r2);
+           $fName = $r2['firstName'];
+           $lName = $r2['lastName'];
+           $privilege = $r2['privilegeName'];
+           $authorName = $fName." ".$lName;
+                       
+           if(isset($r['author']) == $authorName || $_SESSION['privilegeName'] = "Administration"){
             echo '<td> <form action="allArticles.php" method="POST">
-            <input type="hidden" name="author" value="'.$r["articleID"].'">
-            <input type="submit" class="btn btn-lg btn-danger" value="Delete" name="delete"></form> </td>';
+              <input type="hidden" name="articleID" value="'.$r["articleID"].'">
+              <a href="index.php">
+              <input type="submit" class="btn btn-lg btn-danger" value="Edit" name="edit">
+              </a>
+              <input type="submit" class="btn btn-lg btn-danger" value="Delete" name="delete">
+          </form> </td>';
           }
           else
           {
-            echo  '<td> <button type="button" class="btn btn-lg btn-danger" disabled>Edit</button> </td>';
+            echo '<td> <button type="button" class="btn btn-lg btn-danger" disabled>Edit</button> </td>';
             echo  '<td> <button type="button" class="btn btn-lg btn-danger" disabled>Delete</button> </td>';
           }
             ?>
