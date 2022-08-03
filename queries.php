@@ -1,4 +1,6 @@
-<?php require_once 'database.php';
+<?php require_once './components/database.inc.php';
+session_start();
+
 $input = "";
 if(isset($_POST['View'])){ //check if form was submitted
     $input = $_POST['queries']; //get input text
@@ -24,7 +26,7 @@ if(isset($_POST['View'])){ //check if form was submitted
     </style>
 </head>
   <body>
-        <?php include './componants/nav.php'; ?>
+        <?php include './components/nav.php'; ?>
         <div class="col-xs-1 text-center" style="margin-top= 10px;">
             <h1 class="h1">Queries 10 to 20</h1>
         </div>
@@ -106,10 +108,17 @@ if(isset($_POST['View'])){ //check if form was submitted
                     $conn->close();
                     break;
                 case 13:
+<<<<<<< HEAD
                     $sql = "Select u.privilegeName, u.userName, u.firstName, u.lastName, u.citizenship, u.email, u.phoneNumber, s.date
                     From User u, suspended s
                     Where u.userID = s.userID
                     Order by s.date ASC;";
+=======
+                    $sql = "Select u.privilegeName, u.userName, u.firstName, u.lastName, u.citizenship, u.email, u.phone, sus.suspensionDate
+                            From User u, suspensedUser sus
+                            Where u.userName = sus.userName
+                            Order by sus.suspensionDate ASC;";
+>>>>>>> 47058c9ceba2c18c2ce1f0f9caccc19ae51898f3
                     $result = $conn->query($sql);
 
                     if ($result->num_rows > 0) {

@@ -1,5 +1,5 @@
-<?php require_once 'database.php';
-
+<?php require_once './components/database.inc.php';
+session_start();
 $sql = 'SELECT r.reportDate, c.population, r.countryName, r.numVaccine, r.infectedNotVax + r.infectedVax as infected, r.deathVax
 from Reports r, Country c
 where c.countryName = r.countryName
@@ -37,8 +37,10 @@ mysqli_close($conn);
 </head>
 
   <body>
-        <?php include './componants/nav.php'; ?>
-          <div class="col-xs-1 text-center" style="margin-top= 10px;">
+
+        <?php include './components/nav.php'; ?>
+
+          <div class="col-xs-1 text-center" style="margin-top: 10px;">
             <h1 class="h1">Covid Latest Reports</h1>
         </div>
         <table class="table">
@@ -54,7 +56,7 @@ mysqli_close($conn);
   </thead>
   <tbody>
     <?php foreach($researchers as $r) { ?>
-        <tr>
+        <tr class="h2">
             <th scope="row"> <?php echo htmlspecialchars($r['reportDate']); ?> </th>
             <td> <?php echo htmlspecialchars($r['population']); ?> </td>
             <td> <?php echo htmlspecialchars($r['countryName']); ?> </td>
