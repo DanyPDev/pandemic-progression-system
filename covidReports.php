@@ -46,9 +46,8 @@ mysqli_close($conn);
         <table class="table">
   <thead>
     <tr>
-      <th scope="col">Report Date</th>
-      <th scope="col">population</th>
       <th scope="col">Country</th>
+      <th scope="col">Report Date</th>
       <th scope="col">Vaccine Number</th>
       <th scope="col">Infected</th>
       <th scope="col">Vaccinated deaths</th>
@@ -57,12 +56,11 @@ mysqli_close($conn);
   <tbody>
     <?php foreach($researchers as $r) { ?>
         <tr class="h2">
-            <th scope="row"> <?php echo htmlspecialchars($r['reportDate']); ?> </th>
-            <td> <?php echo htmlspecialchars($r['population']); ?> </td>
-            <td> <?php echo htmlspecialchars($r['countryName']); ?> </td>
+            <th scope="row"> <?php echo htmlspecialchars($r['GA_Country']); ?> </th>
+            <td> <?php echo htmlspecialchars($r['reportDate']); ?> </td>
             <td> <?php echo htmlspecialchars($r['numVaccine']); ?> </td>
-            <td> <?php echo htmlspecialchars($r['infected']); ?> </td> 
-            <td> <?php echo htmlspecialchars($r['deathVax']); ?> </td>
+            <td> <?php echo htmlspecialchars($r['infected']); ?> </td>
+            <td> <?php echo htmlspecialchars($r['deathVax']); ?> </td> 
         </tr>
     <?php } ?>
     
