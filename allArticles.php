@@ -4,9 +4,9 @@ session_start();
 
 if(isset($_POST['delete'])){
 
-  $id_to_delete = mysqli_real_escape_string($conn, $_POST['userID']);
+  $id_to_delete = mysqli_real_escape_string($conn, $_POST['articleID']);
   
-  $sql = "DELETE FROM Article WHERE userID = $id_to_delete;";
+  $sql = "DELETE FROM Article WHERE articleID = $id_to_delete;";
 
   if(mysqli_query($conn, $sql)){
     header('location: allUsers.php?userDelete=true');
@@ -55,7 +55,7 @@ mysqli_close($conn);
           <?php include './components/nav.php'; ?>
         
           <div class="col-xs-1 text-center" style="margin-top= 10px;">
-            <h1 class="h1">Users</h1>
+            <h1 class="h1">Articles</h1>
         </div>
         <table class="table">
   <thead>
@@ -75,16 +75,19 @@ mysqli_close($conn);
             <td> <?php echo htmlspecialchars($r['article']); ?> </td>
            <?php
            if(isset($_SESSION['author']) && $_SESSION['author'] == $r['author']){
+            echo '<td> <form action="allUsers.php" method="POST">
+            <input type="hidden" name="userID" value="'.$r["articleID"].'">
+            <input type="submit" class="btn btn-lg btn-danger" value="Edit" name="edit"></form> </td>';
+
             echo '<td> <form action="allArticles.php" method="POST">
             <input type="hidden" name="author" value="'.$r["articleID"].'">
-            <input type="submit" class="btn btn-lg btn-danger" value="Delete" name="delete">
-        </form> </td>';
-        }
-        else
-        {
-          echo  '<td> <button type="button" class="btn btn-lg btn-danger" disabled>Delete</button> </td>';
-        }
-
+            <input type="submit" class="btn btn-lg btn-danger" value="Delete" name="delete"></form> </td>';
+          }
+          else
+          {
+            echo  '<td> <button type="button" class="btn btn-lg btn-danger" disabled>Edit</button> </td>';
+            echo  '<td> <button type="button" class="btn btn-lg btn-danger" disabled>Delete</button> </td>';
+          }
             ?>
         </tr>
     <?php } ?>
