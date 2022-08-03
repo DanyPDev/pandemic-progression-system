@@ -1,12 +1,7 @@
 <?php require_once './components/database.inc.php';
       require_once './components/functions.inc.php';
       session_start();
-      
-      $userID = $_SESSION['userEdit'];
-      $result = mysqli_query($conn, "SELECT * FROM User WHERE userID='$userID'"); 
-      $users = mysqli_fetch_all($result, MYSQLI_ASSOC);
-      mysqli_free_result($result);
-      mysqli_close($conn);
+
     
       if(isset($_POST["submit"])){
 
@@ -25,6 +20,7 @@
         
         if(mysqli_query($conn, $sql))
         {
+         
           header('location: allUsers.php');
         }
         else{
@@ -62,9 +58,12 @@
           <div class="d-flex align-items-center flex-column col-xs-1 text-center" style="margin-top: 10px;">
             <h1 class="h1">Edit User</h1>
             <?php 
-               
-               
-                foreach($users as $r) { ?>
+                $userID = $_SESSION['userEdit'];
+                echo $userID;
+                $sql = mysqli_query($conn, "SELECT * FROM User WHERE userID='$userID'"); 
+                $result = mysqli_fetch_all($sql, MYSQLI_ASSOC);
+
+                foreach($result as $r) { ?>
                 <form class="d-flex flex-column w-25" action="editUser.php" method="post" width="200px">
                     <input class="m-3" type="text" name="firstName" value="<?php $r['firstName']; echo $r['firstName']?>" required>
                     <input class="m-3" type="text" name="lastName" value="<?php $r['lastName']; echo $r['lastName']?>" required>
