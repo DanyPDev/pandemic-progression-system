@@ -89,9 +89,9 @@ mysqli_close($conn);
             if(isset($_SESSION['privilegeName']) && $_SESSION['privilegeName'] == "Administration"){
               echo '<td> <form action="allUsers.php" method="POST">
               <input type="hidden" name="userID" value="'.$r["userID"].'">
-              <a href="index.php">
+      
               <input type="submit" class="btn btn-lg btn-primary" value="Edit" name="edit">
-              </a>
+          
               <input type="submit" class="btn btn-lg btn-danger" value="Delete" name="delete">
           </form> </td>';
           }
