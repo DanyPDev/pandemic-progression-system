@@ -1,5 +1,6 @@
 <?php require_once './components/database.inc.php';
-      require_once './components/nav.php';
+
+session_start();
 
     if(isset($_POST['submit'])){
 
@@ -45,6 +46,7 @@
   <head>
     <meta charset="UTF-8">
     <title>COMP353 Project</title>
+    <link rel="stylesheet" href="index.css">
    <!-- CSS only -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
 
@@ -58,10 +60,12 @@
 </head>
 
   <body>
-    <?php include './componants/nav.php'; ?>
+    <?php include './components/nav.php'; ?>
         
           <div class="col-xs-1 text-center" style="margin-top= 10px;">
+
             <h1 class="h1">Add an Article</h1>
+
             </div>
             <form class="form-group" action="article.php" method="post">
                 <label for="author">Author</label>

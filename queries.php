@@ -51,16 +51,16 @@ if(isset($_POST['View'])){ //check if form was submitted
         <?php
             switch($input){
                 case 10:
-                    $sql = "Select u.privilegeName,/* u.userName,*/ u.firstName, u.lastName, u.citizenship, u.email, u.phoneNumber
-                            From User u
-                            Order by u.privilegeName ASC, u.citizenship ASC;";
+                    $sql = "Select u.privilegeName, u.userName, u.firstName, u.lastName, u.citizenship, u.email, u.phoneNumber
+                    From User u
+                    Order by u.privilegeName ASC, u.citizenship ASC;";
                     $result = $conn->query($sql);
 
                     if ($result->num_rows > 0) {
-                        echo "<table><tr><th>Role</th><th>Name</th><th>Citizenship</th><th>Email</th><th>Phone</th></tr>";
+                        echo '<table class="table"><tr><th scope="col">Role</th><th scope="col">Username</th><th scope="col">Name</th><th scope="col">Citizenship</th><th scope="col">Email</th><th scope="col">Phone</th></tr>';
                         // output data of each row
                         while($row = $result->fetch_assoc()) {
-                            echo "<tr><td>".$row["privilegeName"]. /*" - Username: " . $row["u.userName"]. " */"</td><td>" . $row["firstName"]. " " . $row["lastName"]. "</td><td>" . $row["citizenship"]. "</td><td>" . $row["email"]. "</td><td> " . $row["phoneNumber"]."</td></tr>";
+                            echo "<tr><td>".$row["privilegeName"] ."</td><td>". $row["userName"]. "</td><td>" . $row["firstName"]. " " . $row["lastName"]. "</td><td>" . $row["citizenship"]. "</td><td>" . $row["email"]. "</td><td> " . $row["phoneNumber"]."</td></tr>";
                         }
                         echo "</table>";
                     } else {
@@ -70,17 +70,14 @@ if(isset($_POST['View'])){ //check if form was submitted
 
                     break;
                 case 11:
-                    $sql = "Select distinct a.author, a.majorTopic, a.minorTopic, a.datePublication, CASE
-                    WHEN a.author in (Select organizationName From Organization) then o.orgCountry
-                    WHEN a.author in (Select firstName + ' ' + lastName as name from User) then u.citizenship
-End as citizenship											
-From Article a, Organization o, User u
-Where (a.author = o.organizationName XOR (a.author = (u.firstName + ' ' + u.lastName) AND u.userID = a.userID))
-Order by citizenship ASC, a.author ASC, a.datePublication ASC;";
+                    $sql = "Select distinct a.author, t.majorTopic, t.minorTopic, a.datePublication, IF(a.author in (Select organizationName From Organization where a.author = organizationName), o.orgCountry, u.citizenship) as citizenship									
+                    From Article a, Organization o, User u, Topic t
+                    Where (a.author = o.organizationName XOR a.author = concat(u.firstName, ' ', u.lastName)) AND a.articleID = t.articleID AND a.articleID NOT IN (Select articleID from adminPrivilege where action = 'delete')
+                    Order by citizenship ASC, a.author ASC, a.datePublication ASC;";
                     $result = $conn->query($sql);
 
                     if ($result->num_rows > 0) {
-                        echo "<table><tr><th>Author</th><th>Major</th><th>Minor</th><th>Date</th><th>citizenship</th></tr>";
+                        echo '<table class="table"><tr><th scope="col">Author</th><th scope="col">Major</th><th scope="col">Minor</th><th scope="col">Date</th><th scope="col">citizenship</th></tr>';
                         // output data of each row
                         while($row = $result->fetch_assoc()) {
                             echo "<tr><td>".$row["author"]. "</td><td>" . $row["majorTopic"]. "</td><td>" . $row["minorTopic"]. "</td><td>" . $row["datePublication"]. "</td><td>" . $row["citizenship"]. "</td></tr>";
@@ -92,17 +89,14 @@ Order by citizenship ASC, a.author ASC, a.datePublication ASC;";
                     $conn->close();
                     break;
                 case 12:
-                    $sql = "Select ra.author, ra.major, ra.minor, ra.date, CASE
-                    WHEN ra.author in (Select organizationName From organization) then o.orgCountry
-                    WHEN ra.author in (Select firstName + ' ' + lastName as name from Users) then u.citizenship
-End as citizenship											
-From removedArticles ra, organization o, Users u
-Where (ra.author = o.organizationName XOR ra.author = (u.firstName + ' ' + u.lastName))
-Order by citizenship ASC, ra.author ASC, ra.date ASC;";
+                    $sql = "Select distinct a.author, t.majorTopic, t.minorTopic, a.datePublication, IF(a.author in (Select organizationName From Organization where a.author = organizationName), o.orgCountry, u.citizenship) as citizenship											
+                    From Article a, Organization o, User u, Topic t
+                    Where (a.author = o.organizationName XOR a.author = concat(u.firstName, ' ', u.lastName)) AND a.articleID = t.articleID AND a.articleID IN (Select articleID from adminPrivilege where action = 'delete')
+                    Order by citizenship ASC, a.author ASC, a.datePublication ASC;";
                     $result = $conn->query($sql);
 
                     if ($result->num_rows > 0) {
-                        echo "<table><tr><th>Author</th><th>Major</th><th>Minor</th><th>Date</th><th>citizenship</th></tr>";
+                        echo '<table class="table"><tr><th scope="col">Author</th><th scope="col">Major</th><th scope="col">Minor</th><th scope="col">Date</th><th scope="col">Citizenship</th></tr>';
                         // output data of each row
                         while($row = $result->fetch_assoc()) {
                             echo "<tr><td>".$row["author"]. "</td><td>" . $row["majorTopic"]. "</td><td>" . $row["minorTopic"]. "</td><td>" . $row["datePublication"]. "</td><td>" . $row["citizenship"]. "</td></tr>";
@@ -114,17 +108,17 @@ Order by citizenship ASC, ra.author ASC, ra.date ASC;";
                     $conn->close();
                     break;
                 case 13:
-                    $sql = "Select u.privilegeName, u.userName, u.firstName, u.lastName, u.citizenship, u.email, u.phone, sus.suspensionDate
-                            From User u, suspensedUser sus
-                            Where u.userName = sus.userName
-                            Order by sus.suspensionDate ASC;";
+                    $sql = "Select u.privilegeName, u.userName, u.firstName, u.lastName, u.citizenship, u.email, u.phoneNumber, s.date
+                    From User u, suspended s
+                    Where u.userID = s.userID
+                    Order by s.date ASC;";
                     $result = $conn->query($sql);
 
                     if ($result->num_rows > 0) {
-                        echo "<table><tr><th>Role</th><th>Username</th><th>Name</th><th>Citizenship</th><th>Email</th><th>Phone</th><th>Suspension Date</th></tr>";
+                        echo '<table class="table"><tr><th scope="col">Role</th><th scope="col">Username</th><th scope="col">Name</th><th scope="col">Citizenship</th><th scope="col">Email</th><th scope="col">Phone</th><th scope="col">Suspension Date</th></tr>';
                         // output data of each row
                         while($row = $result->fetch_assoc()) {
-                            echo "<tr><td>".$row["privilegeName"]. "</td><td>". $row["u.userName"]. "</td><td>" . $row["firstName"]. " " . $row["lastName"]. "</td><td>" . $row["citizenship"]. "</td><td>" . $row["email"]. "</td><td>" . $row["phoneNumber"]. "</td><td> ". $row["suspensionDate"] ."</td></tr>";
+                            echo "<tr><td>".$row["privilegeName"]. "</td><td>". $row["userName"]. "</td><td>" . $row["firstName"]. " " . $row["lastName"]. "</td><td>" . $row["citizenship"]. "</td><td>" . $row["email"]. "</td><td>" . $row["phoneNumber"]. "</td><td> ". $row["date"] ."</td></tr>";
                         }
                         echo "</table>";
                     } else {
@@ -133,18 +127,15 @@ Order by citizenship ASC, ra.author ASC, ra.date ASC;";
                     $conn->close();
                     break;  
                 case 15:
-                    $sql = "Select a.author as authorName, COUNT(distinct a.article) as numOfPublications, CASE
-                    WHEN a.author in (Select organizationName From Organization) then o.orgCountry
-                    WHEN a.author in (Select firstName + ' ' + lastName as name from User) then u.citizenship
-End as citizenship
-from Article a, User u, Organization o
-Where (a.author = o.organizationName XOR (a.author = (u.firstName + ' ' + u.lastName) AND u.userID = a.userID))
-group by a.author
-order by numOfPublications desc";
+                    $sql = "select a.author as authorName, COUNT(distinct a.articleID) as numOfPublications, IF(a.author in (Select organizationName From Organization where a.author = organizationName), o.orgCountry, u.citizenship) as citizenship
+                    from Article a, User u, Organization o
+                    Where (a.author = o.organizationName XOR a.author = concat(u.firstName, ' ', u.lastName))
+                    group by a.author
+                    order by numOfPublications desc;";
                     $result = $conn->query($sql);
 
                     if ($result->num_rows > 0) {
-                        echo "<table><tr><th>Name</th><th>Number of Publications</th><th>Citizenship</th></tr>";
+                        echo '<table class="table"><tr><th scope="col">Author</th><th scope="col">Number of Publications</th><th scope="col">Citizenship</th></tr>';
                         // output data of each row
                         while($row = $result->fetch_assoc()) {
                             echo "<tr><td>".$row["authorName"]. "</td><td>" . $row["numOfPublications"]. "</td><td>" . $row["citizenship"]."</td></tr>";
@@ -156,15 +147,15 @@ order by numOfPublications desc";
                     $conn->close();
                     break;
                 case 16:
-                    $sql = "select r.regionName as regionName, c.countryName, COUNT(distinct a.author) as numOfAuthors, COUNT(distinct a.article) as numOfPublications
-                    from Region r, Country c, regionOf ro, user_lookUp ul, Article a, User u
-                    where r.regionName = ro.regionName and c.countryName = ro.countryName and ul.userID = u.userID and ul.countryName = c.countryName and u.userID = a.userID
+                    $sql = "select r.regionName as regionName, c.countryName, COUNT(distinct a.author) as numOfAuthors, COUNT(distinct a.articleID) as numOfPublications
+                    from Region r, Country c, regionOf ro, Article a, User u, Organization o
+                    where r.regionName = ro.regionName and c.countryName = ro.countryName and ((c.countryName = u.citizenship AND concat(u.firstName, ' ', u.lastName) = a.author) XOR (c.countryName = o.orgCountry AND o.organizationName = a.author))
                     group by c.countryName
                     order by r.regionName asc, numOfPublications desc;";
                     $result = $conn->query($sql);
 
                     if ($result->num_rows > 0) {
-                        echo "<table><tr><th>Region</th><th>Country</th><th>Number of Authors</th><th>Number of Publications</th></tr>";
+                        echo '<table class="table"><tr><th scope="col">Region</th><th scope="col">Country</th><th scope="col">Number of Authors</th><th scope="col">Number of Publications</th></tr>';
                         // output data of each row
                         while($row = $result->fetch_assoc()) {
                             echo "<tr><td>".$row["regionName"]. "</td><td>" . $row["countryName"]. "</td><td>" . $row["numOfAuthors"]. "</td><td>" . $row["numOfPublications"]. "</td></tr>";
@@ -176,19 +167,18 @@ order by numOfPublications desc";
                     $conn->close();
                     break;  
                 case 17:
-                    $sql = "select r.regionName, c.countryName,c.population, SUM(v.numVaccine) as numVaccine, SUM(c.covidDeaths) as covidDeaths, SUM(v.deathVaccine) as deathVaccine, v.reportDate
-                    from Region r, Country c, Vaccine v, regionOf ro
-                    where r.regionName = ro.regionName AND c.countryName = ro.countryName AND c.countryName = v.countryName AND v.reportDate >= ALL (Select v2.reportDate from Vaccine v2 where v2.countryName = c.countryName AND v.vaccineName = v2.vaccineName)
+                    $sql = "select r.regionName, c.countryName, SUM(p.population) as population, SUM(v.numVaccine) as numVaccine, SUM(p.covidDeaths) as covidDeaths, SUM(v.deathVaccine) as deathVaccine
+                    from Region r, Country c, ProStaTer p, regionOf ro, countryContains cc, Vaccine v
+                    where r.regionName = ro.regionName AND c.countryName = ro.countryName AND c.countryName = cc.countryName AND cc.prostaterName = p.prostaterName AND p.prostaterName = v.prostaterName
                     group by c.countryName
-                    order by SUM(c.covidDeaths) ASC;
-                    ";
+                    order by SUM(p.covidDeaths) ASC;";
                     $result = $conn->query($sql);
 
                     if ($result->num_rows > 0) {
-                        echo "<table><tr><th>Region</th><th>Country</th><th>Population</th><th>#Vaccinated</th><th>#Covid Deaths</th><th>#Dead with Vaccine</th><th>Report Date</th></tr>";
+                        echo '<table class="table"><tr><th scope="col">Region</th><th scope="col">Country</th><th scope="col">Population</th><th scope="col">#Vaccinated</th><th scope="col">#Covid Deaths</th><th scope="col">#Dead with Vaccine</th></tr>';
                         // output data of each row
                         while($row = $result->fetch_assoc()) {
-                            echo "<tr><td>".$row["regionName"]. "</td><td>" . $row["countryName"]. "</td><td>" . $row["population"]. "</td><td>" . $row["numVaccine"]. "</td><td>" . $row["covidDeaths"]. "</td><td> " . $row["deathVaccine"]. "</td><td> " . $row["reportDate"]."</td></tr>";
+                            echo "<tr><td>".$row["regionName"]. "</td><td>" . $row["countryName"]. "</td><td>" . $row["population"]. "</td><td>" . $row["numVaccine"]. "</td><td>" . $row["covidDeaths"]. "</td><td> " . $row["deathVaccine"]."</td></tr>";
                         }
                         echo "</table>";
                     } else {
@@ -197,14 +187,15 @@ order by numOfPublications desc";
                     $conn->close();
                     break;  
                 case 19:
-                    $sql = "select r.reportDate, c.population, r.numVaccine, r.infectedNotVax + r.infectedVax as infected, r.deathVax
-                    from Reports r, Country c
-                    where c.countryName = 'Canada' and c.countryName = r.countryName
+                    $sql = "select r.reportDate, SUM(p.population) as population, r.numVaccine, r.infectedNotVax + r.infectedVax as infected, r.deathVax
+                    from Reports r, Country c, ProStaTer p, countryContains cc
+                    where c.countryName = 'Canada' and c.countryName = r.GA_country AND c.countryName = cc.countryName AND p.prostaterName = cc.prostaterName
+                    Group by r.reportDate
                     order by r.reportDate desc;";
                     $result = $conn->query($sql);
 
                     if ($result->num_rows > 0) {
-                        echo "<table><tr><th>Report Date</th><th>Population</th><th>#Vaccinated</th><th>#Infected</th><th>#Infected</th><th>#Dead Vaccine</th></tr>";
+                        echo '<table class="table"><tr><th scope="col">Report Date</th><th scope="col">Population</th><th scope="col">#Vaccinated</th><th scope="col">#Infected</th><th scope="col">#Dead Vaccine</th></tr>';
                         // output data of each row
                         while($row = $result->fetch_assoc()) {
                             echo "<tr><td>".$row["reportDate"]. "</td><td>" . $row["population"]. "</td><td>" . $row["numVaccine"]. "</td><td>" . $row["infected"]. "</td><td>" . $row["deathVax"]. "</td></tr>";
@@ -216,19 +207,16 @@ order by numOfPublications desc";
                     $conn->close();
                     break;
                 case 20:
-                    $sql = "Select a.author as authorName, CASE
-                    WHEN a.author in (Select organizationName From Organization) then o.orgCountry
-                    WHEN a.author in (Select firstName + ' ' + lastName as name from User) then u.citizenship
-End as citizenship, s.nbUsers
-from Article a, User u, Organization o, subscribed s
-Where (a.author = o.organizationName XOR (a.author = (u.firstName + ' ' + u.lastName) AND u.userID = a.userID)) AND a.author = s.author
-Group by s.author
-Having s.nbUsers = (SELECT MAX(c) FROM (SELECT s.nbUsers AS c FROM subscribed s2
-GROUP BY s2.author) as T);";
+                    $sql = "Select a.author as authorName, IF(a.author in (Select organizationName From Organization where a.author = organizationName), o.orgCountry, u.citizenship) as citizenship, Count(distinct s.userID) as nbUsers
+                    from Article a, User u, Organization o, register s
+                    Where (a.author = o.organizationName XOR a.author = concat(u.firstName, ' ', u.lastName)) AND a.author = s.author
+                    Group by s.author
+                    Having Count(distinct s.userID) = (SELECT MAX(c) FROM (SELECT Count(distinct s2.userID) AS c FROM register s2
+                                GROUP BY s2.author) as T);";
                     $result = $conn->query($sql);
 
                     if ($result->num_rows > 0) {
-                        echo "<table><tr><th>Author</th><th>Citizenship</th><th>#Subs</th></tr>";
+                        echo '<table class="table"><tr><th scope="col">Author</th><th scope="col">Citizenship</th><th scope="col">#Subs</th></tr>';
                         // output data of each row
                         while($row = $result->fetch_assoc()) {
                             echo "<tr><td>".$row["authorName"]. "</td><td>" . $row["citizenship"]."</td><td>" . $row["nbUsers"]."</td></tr>";
