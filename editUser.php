@@ -17,6 +17,9 @@
         $password2 = $_POST["password"];
 
         $sql="UPDATE cuc353_1.User SET privilegeName='$privilege2', firstName='$fName2', lastName='$lName2', citizenship='$citizenship2', email='$email2', phoneNumber='$phone2', dob='$dob2' WHERE userID='$userID'";
+        $result = mysqli_query($conn, $sql);
+
+        mysqli_close($conn);
         
         if(mysqli_query($conn, $sql))
         {
@@ -62,7 +65,9 @@
                 echo $userID;
                 $sql = mysqli_query($conn, "SELECT * FROM User WHERE userID='$userID'"); 
                 $result = mysqli_fetch_all($sql, MYSQLI_ASSOC);
-
+                cmysqli_free_result($sql);
+                mysqli_close($conn);
+        
                 foreach($result as $r) { ?>
                 <form class="d-flex flex-column w-25" action="editUser.php" method="post" width="200px">
                     <input class="m-3" type="text" name="firstName" value="<?php $r['firstName']; echo $r['firstName']?>" required>
