@@ -2,14 +2,11 @@
       require_once './components/functions.inc.php';
 session_start();
 
-
-if(isset($_POST['edit'])){ $_SESSION['userEdit'] = $_POST['userID']; header('location: editUser.php'); }
-
 if(isset($_POST['delete'])){
 
   $id_to_delete = mysqli_real_escape_string($conn, $_POST['userID']);
   
-  $sql = "DELETE FROM User WHERE userID = $id_to_delete;";
+  $sql = "DELETE FROM Reports WHERE userID = $id_to_delete;";
 
   if(mysqli_query($conn, $sql)){
     header('location: allUsers.php?userDelete=true');
@@ -19,10 +16,9 @@ if(isset($_POST['delete'])){
   }
 }
 
-
 $sql = 'SELECT *
-from User
-order by userID desc;
+from Reports
+order by reportDate desc;
 ';
 
 $result = mysqli_query($conn, $sql);
@@ -59,48 +55,53 @@ mysqli_close($conn);
           <?php include './components/nav.php'; ?>
         
           <div class="col-xs-1 text-center" style="margin-top= 10px;">
-            <h1 class="h1">Users</h1>
+            <h1 class="h1">Reports</h1>
         </div>
         <table class="table">
   <thead>
     <tr class="h1" style="font-size: 20px;">
-      <th scope="col">userID</th>
-      <th scope="col">Privilege</th>
-      <th scope="col">First Name</th>
-      <th scope="col">Last Name</th>
-      <th scope="col">Citizenship</th>
-      <th scope="col">Phone</th>
-      <th scope="col">Email</th>
-      <th scope="col">Date of Birth</th>
+      
+      <th scope="col">Country</th>
+      <th scope="col">Number of Vaccinated</th>
+      <th scope="col">Infected Total</th>
+      <th scope="col">Infected Vaccinated</th>
+      <th scope="col">Deaths Vaccinated</th>
+      <th scope="col">Deaths Not Vaccinated</th>
+      <th scope="col">Infected Not Vaccinated</th>
+      <th scope="col">Report Date</th>
+      <th scope="col">Number of Vaccines</th>
     </tr>
   </thead>
   <tbody>
     <?php foreach($researchers as $r) { ?>
         <tr class="h1" style="font-size: 15px;">
-            <th scope="row"> <?php echo htmlspecialchars($r['userID']); ?> </th>
-            <td> <?php echo htmlspecialchars($r['privilegeName']); ?> </td>
-            <td> <?php echo htmlspecialchars($r['firstName']); ?> </td>
-            <td> <?php echo htmlspecialchars($r['lastName']); ?> </td>
-            <td> <?php echo htmlspecialchars($r['citizenship']); ?> </td> 
-            <td> <?php echo htmlspecialchars($r['phoneNumber']); ?> </td>
-            <td> <?php echo htmlspecialchars($r['email']); ?> </td>
-            <td> <?php echo htmlspecialchars($r['dob']); ?> </td>
+            <th scope="row"> <?php echo htmlspecialchars($r['GA_country']); ?> </th>
+            <td> <?php echo htmlspecialchars($r['numVaccine']); ?> </td>
+            <td> <?php echo htmlspecialchars($r['infectedVax']); ?> </td>
+            <td> <?php echo htmlspecialchars($r['deathVax']); ?> </td>
+            <td> <?php echo htmlspecialchars($r['deathNoVax']); ?> </td> 
+            <td> <?php echo htmlspecialchars($r['infectedNotVax']); ?> </td>
+            <td> <?php echo htmlspecialchars($r['reportDate']); ?> </td>
+            <td> <?php echo htmlspecialchars($r['numVaccine']); ?> </td>
            <?php
-
-           if(isset($_SESSION['privilegeName']) && $_SESSION['privilegeName'] == "Administration"){
+            if(isset($_SESSION['privilegeName']) && $_SESSION['privilegeName'] == "Administrator"){
+              echo '<td> <form action="allUsers.php" method="POST">
+              <input type="hidden" name="userID" value="'.$r["userID"].'">
+              <input type="submit" class="btn btn-lg btn-danger" value="Edit" name="edit"></form> </td>';
+            }
+            else
+            {
+              echo  '<td> <button type="button" class="btn btn-lg btn-danger" disabled>Edit</button> </td>';
+            }
+           if(isset($_SESSION['privilegeName']) && $_SESSION['privilegeName'] == "Administrator"){
             echo '<td> <form action="allUsers.php" method="POST">
             <input type="hidden" name="userID" value="'.$r["userID"].'">
-            <input type="submit" class="btn btn-lg btn-primary" value="Edit" name="edit">
-            <input type="submit" class="btn btn-lg btn-danger" value="Delete" name="delete">
-        </form> </td>';
-        }
-        else
-        {
-          echo '<td> <button type="button" class="btn btn-lg btn-primary" disabled>Edit</button> </td>';
-          echo  '<td> <button type="button" class="btn btn-lg btn-danger" disabled>Delete</button> </td>';
-        }
-
-
+            <input type="submit" class="btn btn-lg btn-danger" value="Delete" name="delete"></form> </td>';
+          }
+          else
+          {
+            echo  '<td> <button type="button" class="btn btn-lg btn-danger" disabled>Delete</button> </td>';
+          }
             ?>
         </tr>
     <?php } ?>

@@ -1,5 +1,7 @@
 <?php require_once './components/database.inc.php';
+
 session_start();
+
     if(isset($_POST['submit'])){
 
       if(!empty($_POST['author']) && !empty($_POST['majorTopic']) && !empty($_POST['minorTopic']) && !empty($_POST['summary']) && !empty($_POST['article']))
@@ -11,9 +13,20 @@ session_start();
         $article = $_POST['article'];
         $date = date("Y-m-d");
         
-        $sql="INSERT INTO Article (author, datePublication, majorTopic, minorTopic, summary, article) VALUES ('$author', '$date', '$major', '$minor', '$summary', '$article')";
+        $sql="INSERT INTO cuc353_1.Article (author, datePublication, article) VALUES ('$author', '$date', '$article')";
+        mysqli_query($conn, $sql) or die(mysqli_error($db));
 
-        if(mysqli_query($conn, $sql))
+        $fetch = mysqli_query($conn, "SELECT articleID FROM cuc353_1.Article WHERE datePublication='$date' and article='$article'");
+
+        $result = mysqli_fetch_all($fetch, MYSQLI_ASSOC);
+        foreach($result as $r);
+        $articleID = $r['articleID'];
+        
+
+        $sql2="INSERT INTO cuc353_1.Summary (majorTopic, minorTopic, summary) VALUES ('$major', '$minor', '$summary')";
+        $sql3="INSERT INTO cuc353_1.Topic (articleID, majorTopic, minorTopic) VALUES ('$articleID', '$major', '$minor')";
+
+        if(mysqli_query($conn, $sql2) && mysqli_query($conn, $sql3))
         {
           echo '<script>alert("Article Submitted")</script>'; //https://www.geeksforgeeks.org/how-to-pop-an-alert-message-box-using-php/
         }
@@ -50,7 +63,9 @@ session_start();
     <?php include './components/nav.php'; ?>
         
           <div class="col-xs-1 text-center" style="margin-top= 10px;">
-            <h1 class="h1">Add an article</h1>
+
+            <h1 class="h1">Add an Article</h1>
+
             </div>
             <form class="form-group" action="article.php" method="post">
                 <label for="author">Author</label>
@@ -68,7 +83,7 @@ session_start();
                 <label for="article">Article</label>
                 <br><textarea id="article" type="text" class="form-control" name="article" placeholder="Article"></textarea></br>
 
-                <br><button type="submit" class="btn btn-primary" name="submit">Submit User</button></br>
+                <br><button type="submit" class="btn btn-primary" name="submit">Submit Article</button></br>
             </form>
   </body>
 

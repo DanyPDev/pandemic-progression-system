@@ -2,14 +2,11 @@
       require_once './components/functions.inc.php';
 session_start();
 
-
-if(isset($_POST['edit'])){ $_SESSION['userEdit'] = $_POST['userID']; header('location: editUser.php'); }
-
 if(isset($_POST['delete'])){
 
-  $id_to_delete = mysqli_real_escape_string($conn, $_POST['userID']);
+  $id_to_delete = mysqli_real_escape_string($conn, $_POST['articleID']);
   
-  $sql = "DELETE FROM User WHERE userID = $id_to_delete;";
+  $sql = "DELETE FROM Article WHERE articleID = $id_to_delete;";
 
   if(mysqli_query($conn, $sql)){
     header('location: allUsers.php?userDelete=true');
@@ -19,10 +16,9 @@ if(isset($_POST['delete'])){
   }
 }
 
-
 $sql = 'SELECT *
-from User
-order by userID desc;
+from Article
+order by datePublication desc;
 ';
 
 $result = mysqli_query($conn, $sql);
@@ -59,48 +55,39 @@ mysqli_close($conn);
           <?php include './components/nav.php'; ?>
         
           <div class="col-xs-1 text-center" style="margin-top= 10px;">
-            <h1 class="h1">Users</h1>
+            <h1 class="h1">Articles</h1>
         </div>
         <table class="table">
   <thead>
     <tr class="h1" style="font-size: 20px;">
-      <th scope="col">userID</th>
-      <th scope="col">Privilege</th>
-      <th scope="col">First Name</th>
-      <th scope="col">Last Name</th>
-      <th scope="col">Citizenship</th>
-      <th scope="col">Phone</th>
-      <th scope="col">Email</th>
-      <th scope="col">Date of Birth</th>
+      <th scope="col">articleID</th>
+      <th scope="col">Author</th>
+      <th scope="col">Date of Publication</th>
+      <th scope="col">Article</th>
     </tr>
   </thead>
   <tbody>
     <?php foreach($researchers as $r) { ?>
         <tr class="h1" style="font-size: 15px;">
-            <th scope="row"> <?php echo htmlspecialchars($r['userID']); ?> </th>
-            <td> <?php echo htmlspecialchars($r['privilegeName']); ?> </td>
-            <td> <?php echo htmlspecialchars($r['firstName']); ?> </td>
-            <td> <?php echo htmlspecialchars($r['lastName']); ?> </td>
-            <td> <?php echo htmlspecialchars($r['citizenship']); ?> </td> 
-            <td> <?php echo htmlspecialchars($r['phoneNumber']); ?> </td>
-            <td> <?php echo htmlspecialchars($r['email']); ?> </td>
-            <td> <?php echo htmlspecialchars($r['dob']); ?> </td>
+            <th scope="row"> <?php echo htmlspecialchars($r['articleID']); ?> </th>
+            <td> <?php echo htmlspecialchars($r['author']); ?> </td>
+            <td> <?php echo htmlspecialchars($r['datePublication']); ?> </td>
+            <td> <?php echo htmlspecialchars($r['article']); ?> </td>
            <?php
-
-           if(isset($_SESSION['privilegeName']) && $_SESSION['privilegeName'] == "Administration"){
+           if(isset($_SESSION['author']) && $_SESSION['author'] == $r['author']){
             echo '<td> <form action="allUsers.php" method="POST">
-            <input type="hidden" name="userID" value="'.$r["userID"].'">
-            <input type="submit" class="btn btn-lg btn-primary" value="Edit" name="edit">
-            <input type="submit" class="btn btn-lg btn-danger" value="Delete" name="delete">
-        </form> </td>';
-        }
-        else
-        {
-          echo '<td> <button type="button" class="btn btn-lg btn-primary" disabled>Edit</button> </td>';
-          echo  '<td> <button type="button" class="btn btn-lg btn-danger" disabled>Delete</button> </td>';
-        }
+            <input type="hidden" name="userID" value="'.$r["articleID"].'">
+            <input type="submit" class="btn btn-lg btn-danger" value="Edit" name="edit"></form> </td>';
 
-
+            echo '<td> <form action="allArticles.php" method="POST">
+            <input type="hidden" name="author" value="'.$r["articleID"].'">
+            <input type="submit" class="btn btn-lg btn-danger" value="Delete" name="delete"></form> </td>';
+          }
+          else
+          {
+            echo  '<td> <button type="button" class="btn btn-lg btn-danger" disabled>Edit</button> </td>';
+            echo  '<td> <button type="button" class="btn btn-lg btn-danger" disabled>Delete</button> </td>';
+          }
             ?>
         </tr>
     <?php } ?>
