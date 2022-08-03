@@ -68,6 +68,7 @@
             <h1 class="h1">Edit User</h1>
             <?php 
                 $userID = $_SESSION['userEdit'];
+                echo $userID;
                 $sql = mysqli_query($conn, "SELECT * FROM User WHERE userID='$userID'"); 
                 $result = mysqli_fetch_all($sql, MYSQLI_ASSOC);
                 foreach($sql as $r) { ?>
