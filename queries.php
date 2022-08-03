@@ -89,9 +89,9 @@ if(isset($_POST['View'])){ //check if form was submitted
                     $conn->close();
                     break;
                 case 12:
-                    $sql = "Select distinct a.author, t.majorTopic, t.minorTopic, a.datePublication, IF(a.author in (Select organizationName From Organization where a.author = organizationName), o.orgCountry, u.citizenship) as citizenship											
+                    $sql = "Select distinct a.author, t.majorTopic, t.minorTopic, a.datePublication, IF(a.author in (Select organizationName From Organization where a.author = organizationName), o.orgCountry, u.citizenship) as citizenship
                     From Article a, Organization o, User u, Topic t
-                    Where (a.author = o.organizationName XOR a.author = concat(u.firstName, ' ', u.lastName)) AND a.articleID = t.articleID AND a.articleID IN (Select articleID from adminPrivilege where action = 'delete')
+                    Where (a.author = o.organizationName XOR a.author = concat(u.firstName, ' ', u.lastName)) AND a.articleID = t.articleID AND a.articleID IN (Select articleID from researcherPrivilege where action = 'delete') OR a.articleID IN (Select articleID from adminPrivilege where action = 'delete') OR a.articleID IN (Select articleID from delegatePrivilege where action = 'delete')
                     Order by citizenship ASC, a.author ASC, a.datePublication ASC;";
                     $result = $conn->query($sql);
 

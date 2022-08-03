@@ -1,24 +1,8 @@
 <?php require_once './components/database.inc.php';
-      require_once './components/functions.inc.php';
 session_start();
-
-if(isset($_POST['delete'])){
-
-  $id_to_delete = mysqli_real_escape_string($conn, $_POST['userID']);
-  
-  $sql = "DELETE FROM Reports WHERE userID = $id_to_delete;";
-
-  if(mysqli_query($conn, $sql)){
-    header('location: allUsers.php?userDelete=true');
-    echo '<script>alert("User Deleted from Database")</script>'; //https://www.geeksforgeeks.org/how-to-pop-an-alert-message-box-using-php/
-  } else {
-    echo 'query error: ' . mysqli_error($conn);
-  }
-}
-
-$sql = 'SELECT *
-from Reports
-order by reportDate desc;
+$sql = 'SELECT r.GA_country, r.reportDate, r.numVaccine, r.infectedNotVax + r.infectedVax as infected, r.deathVax
+from Reports r
+order by r.reportDate desc;
 ';
 
 $result = mysqli_query($conn, $sql);
@@ -52,57 +36,30 @@ mysqli_close($conn);
 </head>
 
   <body>
-          <?php include './components/nav.php'; ?>
-        
-          <div class="col-xs-1 text-center" style="margin-top= 10px;">
-            <h1 class="h1">Reports</h1>
+
+        <?php include './components/nav.php'; ?>
+
+          <div class="col-xs-1 text-center" style="margin-top: 10px;">
+            <h1 class="h1">Covid Latest Reports</h1>
         </div>
         <table class="table">
   <thead>
-    <tr class="h1" style="font-size: 20px;">
-      
+    <tr>
       <th scope="col">Country</th>
-      <th scope="col">Number of Vaccinated</th>
-      <th scope="col">Infected Total</th>
-      <th scope="col">Infected Vaccinated</th>
-      <th scope="col">Deaths Vaccinated</th>
-      <th scope="col">Deaths Not Vaccinated</th>
-      <th scope="col">Infected Not Vaccinated</th>
       <th scope="col">Report Date</th>
-      <th scope="col">Number of Vaccines</th>
+      <th scope="col">Vaccine Number</th>
+      <th scope="col">Infected</th>
+      <th scope="col">Vaccinated deaths</th>
     </tr>
   </thead>
   <tbody>
     <?php foreach($researchers as $r) { ?>
-        <tr class="h1" style="font-size: 15px;">
+        <tr class="h2">
             <th scope="row"> <?php echo htmlspecialchars($r['GA_country']); ?> </th>
-            <td> <?php echo htmlspecialchars($r['numVaccine']); ?> </td>
-            <td> <?php echo htmlspecialchars($r['infectedVax']); ?> </td>
-            <td> <?php echo htmlspecialchars($r['deathVax']); ?> </td>
-            <td> <?php echo htmlspecialchars($r['deathNoVax']); ?> </td> 
-            <td> <?php echo htmlspecialchars($r['infectedNotVax']); ?> </td>
             <td> <?php echo htmlspecialchars($r['reportDate']); ?> </td>
             <td> <?php echo htmlspecialchars($r['numVaccine']); ?> </td>
-           <?php
-            if(isset($_SESSION['privilegeName']) && $_SESSION['privilegeName'] == "Administrator"){
-              echo '<td> <form action="allUsers.php" method="POST">
-              <input type="hidden" name="userID" value="'.$r["userID"].'">
-              <input type="submit" class="btn btn-lg btn-danger" value="Edit" name="edit"></form> </td>';
-            }
-            else
-            {
-              echo  '<td> <button type="button" class="btn btn-lg btn-danger" disabled>Edit</button> </td>';
-            }
-           if(isset($_SESSION['privilegeName']) && $_SESSION['privilegeName'] == "Administrator"){
-            echo '<td> <form action="allUsers.php" method="POST">
-            <input type="hidden" name="userID" value="'.$r["userID"].'">
-            <input type="submit" class="btn btn-lg btn-danger" value="Delete" name="delete"></form> </td>';
-          }
-          else
-          {
-            echo  '<td> <button type="button" class="btn btn-lg btn-danger" disabled>Delete</button> </td>';
-          }
-            ?>
+            <td> <?php echo htmlspecialchars($r['infected']); ?> </td>
+            <td> <?php echo htmlspecialchars($r['deathVax']); ?> </td> 
         </tr>
     <?php } ?>
     

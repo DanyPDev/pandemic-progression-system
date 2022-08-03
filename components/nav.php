@@ -23,15 +23,14 @@
               Menu
             </a>
             <ul id="dropdownChild" class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
-              <li><a class="dropdown-item" href="covidReports.php">Covid Statistics</a></li>
-              <li><a class="dropdown-item" href="createUser.php">Create User</a></li>
-              <li><a class="dropdown-item" href="allUsers.php">Display Users</a></li>
-              <li><a class="dropdown-item" href="editUser.php">Edit User</a></li>
-              <li><a class="dropdown-item" href="queries.php">Query</a></li>
+            <li><a class="dropdown-item" href="allReports.php">Display Reports</a></li>
+            <li><a class="dropdown-item" href="createUser.php">Create User</a></li>
+            <li><a class="dropdown-item" href="allUsers.php">Display Users</a></li>
+            <li><a class="dropdown-item" href="editUser.php">Edit User</a></li>
+            <li><a class="dropdown-item" href="queries.php">Query</a></li>
 
-              <li><a class="dropdown-item" href="article.php">Create Article</a></li>
-              <li><a class="dropdown-item" href="allArticles.php">Display Articles</a></li>
-              <li><a class="dropdown-item" href="allReports.php">Display Reports</a></li>
+            <li><a class="dropdown-item" href="article.php">Create Article</a></li>
+            <li><a class="dropdown-item" href="allArticles.php">Display Articles</a></li>
 
             </ul>
           </li>  
@@ -78,16 +77,15 @@
               Menu
             </a>
             <ul id="dropdownChild" class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
-              <li><a class="dropdown-item" href="covidReports.php">Covid Statistics</a></li>
-              <li><a class="dropdown-item" href="createUser.php">Create User</a></li>
-              <li><a class="dropdown-item" href="allUsers.php">Display Users</a></li>
-              <li><a class="dropdown-item" href="queries.php">Query</a></li>
+            <li><a class="dropdown-item" href="allReports.php">Display Reports</a></li>
+            <li><a class="dropdown-item" href="createUser.php">Create User</a></li>
+            <li><a class="dropdown-item" href="allUsers.php">Display Users</a></li>
+            <li><a class="dropdown-item" href="editUser.php">Edit User</a></li>
+            <li><a class="dropdown-item" href="queries.php">Query</a></li>
 
-              <li><a class="dropdown-item" href="article.php">Create an Article</a></li>
-              <li><a class="dropdown-item" href="allArticles.php">Display Articles</a></li>
-
-              <li><a class="dropdown-item" href="article.php">Articles</a></li>
-
+            <li><a class="dropdown-item" href="article.php">Create Article</a></li>
+            <li><a class="dropdown-item" href="allArticles.php">Display Articles</a></li>
+           
             </ul>
           </li>  
           <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">
