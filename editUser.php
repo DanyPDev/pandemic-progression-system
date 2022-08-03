@@ -71,7 +71,7 @@
                 $sql = mysqli_query($conn, "SELECT * FROM User WHERE userID='$userID'"); 
                 $result = mysqli_fetch_all($sql, MYSQLI_ASSOC);
                 foreach($sql as $r) { ?>
-                <form class="d-flex flex-column w-25" action="createUser.php" method="post" width="200px">
+                <form class="d-flex flex-column w-25" action="editUser.php" method="post" width="200px">
                     <input class="m-3" type="text" name="firstName" value="<?php $r['firstName']; echo $r['firstName']?>" required>
                     <input class="m-3" type="text" name="lastName" value="<?php $r['lastName']; echo $r['lastName']?>" required>
                     <input class="m-3" type="text" name="citizenship" value="<?php $r['citizenship']; echo $r['citizenship']?>" required>
