@@ -20,7 +20,7 @@
         
         if(mysqli_query($conn, $sql))
         {
-          echo '<script>alert("Edit Submitted")</script>'; //https://www.geeksforgeeks.org/how-to-pop-an-alert-message-box-using-php/
+      
           header('location: allUsers.php');
         }
         else{
