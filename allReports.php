@@ -1,8 +1,8 @@
 <?php require_once './components/database.inc.php';
 
-$sql = 'SELECT r.reportDate, c.population, r.countryName, r.numVaccine, r.infectedNotVax + r.infectedVax as infected, r.deathVax
-from Reports r, Country c
-where c.countryName = r.countryName
+
+$sql = 'SELECT r.GA_country, r.reportDate, r.numVaccine, r.infectedNotVax + r.infectedVax as infected, r.deathVax
+from Reports r
 order by r.reportDate desc;
 ';
 
@@ -37,16 +37,18 @@ mysqli_close($conn);
 </head>
 
   <body>
+
         <?php include './components/nav.php'; ?>
-          <div class="col-xs-1 text-center" style="margin-top= 10px;">
+
+          <div class="col-xs-1 text-center" style="margin-top: 10px;">
+
             <h1 class="h1">Covid Latest Reports</h1>
         </div>
         <table class="table">
   <thead>
     <tr>
-      <th scope="col">Report Date</th>
-      <th scope="col">population</th>
       <th scope="col">Country</th>
+      <th scope="col">Report Date</th>
       <th scope="col">Vaccine Number</th>
       <th scope="col">Infected</th>
       <th scope="col">Vaccinated deaths</th>
@@ -54,13 +56,12 @@ mysqli_close($conn);
   </thead>
   <tbody>
     <?php foreach($researchers as $r) { ?>
-        <tr>
-            <th scope="row"> <?php echo htmlspecialchars($r['reportDate']); ?> </th>
-            <td> <?php echo htmlspecialchars($r['population']); ?> </td>
-            <td> <?php echo htmlspecialchars($r['countryName']); ?> </td>
+        <tr class="h2">
+            <th scope="row"> <?php echo htmlspecialchars($r['GA_country']); ?> </th>
+            <td> <?php echo htmlspecialchars($r['reportDate']); ?> </td>
             <td> <?php echo htmlspecialchars($r['numVaccine']); ?> </td>
-            <td> <?php echo htmlspecialchars($r['infected']); ?> </td> 
-            <td> <?php echo htmlspecialchars($r['deathVax']); ?> </td>
+            <td> <?php echo htmlspecialchars($r['infected']); ?> </td>
+            <td> <?php echo htmlspecialchars($r['deathVax']); ?> </td> 
         </tr>
     <?php } ?>
     

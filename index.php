@@ -1,3 +1,18 @@
+<?php require_once './components/functions.inc.php';
+      require_once './components/database.inc.php';
+   
+      session_start();
+      if(isset($_POST["submit"])){
+        $username = $_POST["username"];
+        $pwd = $_POST["password"];
+    
+        loginUser($conn, $username, $pwd);
+      }
+      
+      if(isset($_GET["error"]))
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -16,8 +31,10 @@
     </style>
 </head>
 
-  <body>
+  <body>~
   <?php include './components/nav.php'; ?>
+
+
           <div class="col-xs-1 text-center" style="margin-top= 10px;">
             <h1 class="h1">Welcome to The International Covid Application</h1>
             <h2 class="h2">Find The Latest Satistics about COVID</h2>
@@ -26,6 +43,7 @@
             <br/>
             <h2 class="h2">Have fun using the website! :D</h2>
         </div>
+      
   </body>
 
 </html>
